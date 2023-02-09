@@ -1,9 +1,5 @@
 "use client";
-import {
-  TravelLog,
-  TravelLogKey,
-  TravelLogWithId,
-} from "@/models/TravelLog.model";
+import { TravelLog, TravelLogKey } from "@/models/TravelLog.model";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -41,7 +37,7 @@ const travelLogInputs: Record<
   },
   visitDate: {
     type: "date",
-    label: "Fecha de Visita",
+    label: "Fecha de visita",
   },
 };
 
@@ -69,20 +65,38 @@ export default function TravelLogForm({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-4 mx-auto max-w-md px-4"
+    >
       {Object.entries(travelLogInputs).map(([name, value]) => {
         const key = name as TravelLogKey;
         return (
-          <div key={key}>
+          <div key={key} className="flex flex-col gap-2">
             <label>
               <span>{value.label || key}</span>
             </label>
             {value.type === "textarea" ? (
-              <textarea {...register(key)} />
+              <textarea
+                {...register(key)}
+                className={`bg-neutral-900 border border-neutral-500/25 ${
+                  errors[key] ? "shadow-sm shadow-red-800/50" : ""
+                }`}
+              />
             ) : (
-              <input type={value.type} {...register(key)} />
+              <input
+                type={value.type}
+                {...register(key)}
+                className={`bg-neutral-900 border border-neutral-500/25 ${
+                  errors[key] ? "shadow-sm shadow-red-800/50" : ""
+                }`}
+              />
             )}
-            {errors[key] && <span>{errors[key]?.message}</span>}
+            {errors[key] && (
+              <span className="text-red-800 font-bold text-sm">
+                {errors[key]?.message}
+              </span>
+            )}
           </div>
         );
       })}
