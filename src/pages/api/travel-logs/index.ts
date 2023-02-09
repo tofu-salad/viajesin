@@ -1,10 +1,12 @@
 import client from "@/lib/prismadb";
-import { TravelLog } from "@/models/TravelLog.model";
+import { TravelLogWithId } from "@/models/TravelLog.model";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<TravelLog[] | TravelLog | { message: string }>
+  res: NextApiResponse<
+    TravelLogWithId[] | TravelLogWithId | { message: string }
+  >
 ) {
   try {
     if (req.method === "GET") {
@@ -20,7 +22,7 @@ export default async function handler(
         longitude,
         visitDate,
         description,
-      } = await TravelLog.parseAsync(req.body);
+      } = await TravelLogWithId.parseAsync(req.body);
       const createLog = await client.travelLog.create({
         data: {
           userId,
@@ -34,11 +36,12 @@ export default async function handler(
         },
       });
       res.status(200).json(createLog);
+    } else {
+      res.status(405).json({ message: "Not supported" });
     }
-    res.status(405).json({ message: "Not supported" });
   } catch (e) {
     const error = e as Error;
     console.error({ message: error.message });
-    return res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 }
