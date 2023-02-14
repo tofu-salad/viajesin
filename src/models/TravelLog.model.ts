@@ -14,10 +14,15 @@ export const TravelLog = z.object({
   longitude: z.coerce.number().min(-180).max(180),
   visitDate: z.coerce.date(),
 });
+
 export const TravelLogWithId = TravelLog.extend({
+  id: z.string().trim().min(1),
+});
+export const TravelLogWithUserId = TravelLog.extend({
   userId: z.string().trim().min(1),
 });
 export const TravelLogKeys = TravelLog.keyof().Enum;
 export type TravelLogKey = keyof typeof TravelLogKeys;
 export type TravelLog = z.infer<typeof TravelLog>;
+export type TravelLogWithUserId = z.infer<typeof TravelLogWithUserId>;
 export type TravelLogWithId = z.infer<typeof TravelLogWithId>;
