@@ -1,8 +1,6 @@
 import client from "@/lib/prismadb";
 import { TravelLogWithUserId } from "@/models/TravelLog.model";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,38 +13,29 @@ export default async function handler(
       const logs = await client.travelLog.findMany({});
       res.status(200).json(logs);
     } else if (req.method === "POST") {
-      const session = await getServerSession(req, res, authOptions);
-      console.log(session);
-      if (session) {
-        const userId = session.user.id;
-        console.log(req.body);
-        console.log(userId);
-        const {
+      const {
+        image,
+        title,
+        rating,
+        visitDate,
+        description,
+        latitude,
+        longitude,
+        userId,
+      } = await TravelLogWithUserId.parseAsync(req.body);
+      const createLog = await client.travelLog.create({
+        data: {
+          latitude,
+          longitude,
+          userId,
           image,
           title,
           rating,
-          latitude,
-          longitude,
           visitDate,
           description,
-        } = await TravelLogWithUserId.parseAsync(req.body);
-        const createLog = await client.travelLog.create({
-          data: {
-            userId,
-            image,
-            title,
-            rating,
-            latitude,
-            longitude,
-            visitDate,
-            description,
-          },
-        });
-        console.log("xd", userId);
-        res.status(200).json(createLog);
-      } else {
-        res.status(400).send({ message: "Session not found" });
-      }
+        },
+      });
+      res.status(200).json(createLog);
     } else {
       res.status(405).json({ message: "Not supported" });
     }
