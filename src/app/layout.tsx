@@ -10,7 +10,9 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="catppuccin-mocha">
       <head />
-      <body className={`${inter.className} bg-neutral-900 text-neutral-300 w-screnn h-screen`}>
+      <body
+        className={`${inter.className} bg-neutral-900 text-neutral-300 w-screnn h-screen`}
+      >
         {children}
       </body>
     </html>

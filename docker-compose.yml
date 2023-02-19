@@ -3,7 +3,7 @@ services:
     image: postgres:15.1-alpine
     restart: always
     ports:
-    - 5432:5432
+      - 5432:5432
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: postgres
@@ -12,4 +12,3 @@ services:
       - pgdata:/var/lib/postgresql/data
 volumes:
   pgdata:
-
