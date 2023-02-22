@@ -2,7 +2,7 @@
 import { TravelLog, TravelLogKey } from "@/models/TravelLog.model";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
 import { Spinner } from "./LoadingSpinner";
 import { useRouter } from "next/navigation";
