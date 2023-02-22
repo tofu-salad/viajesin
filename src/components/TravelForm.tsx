@@ -2,9 +2,10 @@
 import { TravelLog, TravelLogKey } from "@/models/TravelLog.model";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
+import { Spinner } from "./LoadingSpinner";
+import { useRouter } from "next/navigation";
 const travelLogInputs: Record<
   TravelLogKey,
   {
@@ -15,23 +16,23 @@ const travelLogInputs: Record<
 > = {
   title: {
     type: "text",
-    label: "Titulo",
+    label: "Título",
   },
   description: {
     type: "textarea",
-    label: "Descripcion",
+    label: "Descripción",
   },
   image: {
     type: "url",
-    label: "Imagen",
+    label: "URL de la Imagen",
   },
   rating: {
     type: "number",
-    label: "Puntaje",
+    label: "Puntuación",
   },
   visitDate: {
     type: "date",
-    label: "Fecha de visita",
+    label: "Fecha de la visita",
   },
   latitude: {
     label: "Latitud",
@@ -42,11 +43,7 @@ const travelLogInputs: Record<
 };
 
 const now = new Date();
-const padNum = (input: number) => input.toString().padStart(2, "0");
-const nowString = new Date(
-  `${now.getFullYear()}-${padNum(now.getMonth() + 1)}-${padNum(now.getDate())}`
-);
-
+const formattedDate = now.toISOString().substring(0, 10);
 type TravelLogFormProps = {
   onComplete: () => void;
   onCancel: () => void;
@@ -57,6 +54,8 @@ export default function TravelLogForm({
 }: TravelLogFormProps) {
   const [formError, setFormError] = useState("");
   const { state, dispatch } = useContext(TravelLogContext);
+  const isOpen = state.sideBarVisible;
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const {
@@ -73,7 +72,8 @@ export default function TravelLogForm({
       latitude: state.currentMarkerLocation?.lat || 90,
       longitude: state.currentMarkerLocation?.lng || 180,
       rating: 5,
-      visitDate: nowString,
+      // @ts-ignore
+      visitDate: formattedDate,
     },
   });
 
@@ -85,6 +85,7 @@ export default function TravelLogForm({
   const onSubmit: SubmitHandler<TravelLog> = async (data) => {
     try {
       setFormError("");
+      setIsLoading(true);
       const session = await fetch("/api/auth/session");
       const sessionData = await session.json();
       const userId = sessionData.user.id;
@@ -97,10 +98,10 @@ export default function TravelLogForm({
         }),
       });
       if (response.ok) {
-        router.push("/map");
         dispatch({ type: "SET_CURRENT_MARKER_LOCATION", data: null });
         reset();
         onComplete();
+        router.push("/map");
       } else {
         const json = await response.json();
         throw new Error(json.message);
@@ -112,11 +113,13 @@ export default function TravelLogForm({
       } else {
         setFormError(error.message);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="w-full bg-base-100 p-2 rounded-lg">
+    <div className="max-w-sm bg-base-100 p-2 md:rounded-lg">
       <div className="flex justify-end mx-4 my-2 ">
         <button
           onClick={() => {
@@ -124,7 +127,9 @@ export default function TravelLogForm({
             onCancel();
             reset();
           }}
-          className="btn btn-secondary btn-sm"
+          className={`btn btn-secondary btn-sm ${
+            isOpen ? "md:hidden" : "hidden"
+          }`}
         >
           X
         </button>
@@ -145,7 +150,7 @@ export default function TravelLogForm({
           const key = name as TravelLogKey;
           return (
             <div key={name} className="flex flex-col gap-2">
-              <label>
+              <label className="label">
                 <span>{value.label || key}</span>
               </label>
               {value.type === "textarea" ? (
@@ -162,6 +167,8 @@ export default function TravelLogForm({
                   className={`input input-bordered w-full max-w-xs ${
                     errors[key] ? "input-error" : ""
                   }`}
+                  max={key === "rating" ? 10 : undefined}
+                  min={key === "rating" ? 0 : undefined}
                 />
               )}
               {errors[key] && (
@@ -170,7 +177,15 @@ export default function TravelLogForm({
             </div>
           );
         })}
-        <button className="btn">Crear</button>
+        {/* TODO: Make both latitude and longitude be in the same row */}
+        {/* <div> */}
+        {/*   <label>Latitud y longitud</label> */}
+        {/*   <input {...register("latitude")}></input> */}
+        {/*   <input {...register("longitude")}></input> */}
+        {/* </div> */}
+        <button disabled={isLoading} className="btn">
+          {isLoading ? <Spinner /> : "Crear"}
+        </button>
       </form>
     </div>
   );

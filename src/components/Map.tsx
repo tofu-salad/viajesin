@@ -1,11 +1,11 @@
 "use client";
 import { TravelLogWithId } from "@/models/TravelLog.model";
 import L from "leaflet";
-import { useCallback, useContext, useEffect, useLayoutEffect } from "react";
+import { useCallback, useContext, useLayoutEffect } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
 import { ClickIcon, DefaultIcon } from "./MapIcons";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
+import "leaflet/dist/leaflet.css";
 
 type TravelLogMapProps = {
   logs: TravelLogWithId[];

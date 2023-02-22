@@ -1,6 +1,14 @@
 export default function LoadingSpinner() {
   return (
     <div role="status" className="flex items-center justify-center h-screen">
+      <Spinner />
+    </div>
+  );
+}
+
+export function Spinner() {
+  return (
+    <>
       <svg
         aria-hidden="true"
         className="w-8 h-8 mr-2 text-primary animate-spin  fill-secondary"
@@ -18,6 +26,6 @@ export default function LoadingSpinner() {
         />
       </svg>
       <span className="sr-only">Cargando...</span>
-    </div>
+    </>
   );
 }
