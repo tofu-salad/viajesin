@@ -81,7 +81,7 @@ export default function TravelLogForm({
     if (!state.currentMarkerLocation) return;
     setValue("latitude", Number(state.currentMarkerLocation.lat.toFixed(6)));
     setValue("longitude", Number(state.currentMarkerLocation.lng.toFixed(6)));
-  }, [state.currentMarkerLocation]);
+  }, [state.currentMarkerLocation, setValue]);
   const onSubmit: SubmitHandler<TravelLog> = async (data) => {
     try {
       setFormError("");

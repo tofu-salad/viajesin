@@ -24,7 +24,7 @@ export default async function Home() {
               <section>
                 <div className="avatar">
                   <div className="w-24 rounded-full">
-                    <img src={session.image!} />
+                    <img src={session.image!} alt={"Avatar del usuario"} />
                   </div>
                 </div>
                 <div>Bienvenido {session.name}</div>
