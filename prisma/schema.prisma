@@ -27,7 +27,6 @@ model Account {
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
-    @@map("account")
 }
 
 model Session {
@@ -36,8 +35,6 @@ model Session {
     userId       String   @map("user_id")
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@map("session")
 }
 
 model User {
@@ -49,8 +46,6 @@ model User {
     accounts      Account[]
     sessions      Session[]
     TravelLog     TravelLog[]
-
-    @@map("user")
 }
 
 model VerificationToken {
@@ -59,7 +54,6 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
-    @@map("verification_token")
 }
 
 model TravelLog {

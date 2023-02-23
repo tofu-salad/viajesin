@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "account" (
+CREATE TABLE "Account" (
     "id" STRING NOT NULL,
     "user_id" STRING NOT NULL,
     "type" STRING NOT NULL,
@@ -13,32 +13,32 @@ CREATE TABLE "account" (
     "id_token" STRING,
     "session_state" STRING,
 
-    CONSTRAINT "account_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Account_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "session" (
+CREATE TABLE "Session" (
     "id" STRING NOT NULL,
     "session_token" STRING NOT NULL,
     "user_id" STRING NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "session_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Session_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "user" (
+CREATE TABLE "User" (
     "id" STRING NOT NULL,
     "name" STRING,
     "email" STRING,
     "email_verified" TIMESTAMP(3),
     "image" STRING,
 
-    CONSTRAINT "user_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "verification_token" (
+CREATE TABLE "VerificationToken" (
     "identifier" STRING NOT NULL,
     "token" STRING NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL
@@ -62,25 +62,25 @@ CREATE TABLE "travel_log" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "account_provider_provider_account_id_key" ON "account"("provider", "provider_account_id");
+CREATE UNIQUE INDEX "Account_provider_provider_account_id_key" ON "Account"("provider", "provider_account_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "session_session_token_key" ON "session"("session_token");
+CREATE UNIQUE INDEX "Session_session_token_key" ON "Session"("session_token");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "verification_token_token_key" ON "verification_token"("token");
+CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "verification_token_identifier_token_key" ON "verification_token"("identifier", "token");
+CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
 
 -- AddForeignKey
-ALTER TABLE "account" ADD CONSTRAINT "account_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Account" ADD CONSTRAINT "Account_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "session" ADD CONSTRAINT "session_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Session" ADD CONSTRAINT "Session_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "travel_log" ADD CONSTRAINT "travel_log_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "travel_log" ADD CONSTRAINT "travel_log_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
