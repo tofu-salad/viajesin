@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useEffect, useState } from "react";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
 import { Spinner } from "./LoadingSpinner";
-import { useRouter } from "next/router";
 const travelLogInputs: Record<
   TravelLogKey,
   {
@@ -56,7 +55,6 @@ export default function TravelLogForm({
   const { state, dispatch } = useContext(TravelLogContext);
   const isOpen = state.sideBarVisible;
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
 
   const {
     reset,
@@ -101,7 +99,7 @@ export default function TravelLogForm({
         dispatch({ type: "SET_CURRENT_MARKER_LOCATION", data: null });
         reset();
         onComplete();
-        router.reload();
+        window.location.reload();
       } else {
         const json = await response.json();
         throw new Error(json.message);
@@ -119,15 +117,15 @@ export default function TravelLogForm({
   };
 
   return (
-    <div className="max-w-sm bg-base-100 p-2 md:rounded-lg">
-      <div className="flex justify-end mx-4 my-2 ">
+    <div className="bg-base-100  md:rounded-lg py-4">
+      <div className="flex justify-end  mx-auto max-w-md px-4">
         <button
           onClick={() => {
             dispatch({ type: "SET_CURRENT_MARKER_LOCATION", data: null });
             onCancel();
             reset();
           }}
-          className={`btn btn-secondary btn-sm ${
+          className={`btn btn-secondary btn-sm mt-4 ${
             isOpen ? "md:hidden" : "hidden"
           }`}
         >
@@ -136,7 +134,7 @@ export default function TravelLogForm({
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 mx-auto max-w-md px-4"
+        className="flex flex-col gap-2 mx-auto max-w-md px-4"
       >
         {formError && (
           <div className="alert alert-error shadow-lg">
@@ -164,7 +162,7 @@ export default function TravelLogForm({
                 <input
                   type={value.type}
                   {...register(key)}
-                  className={`input input-bordered w-full max-w-xs ${
+                  className={`input input-bordered  ${
                     errors[key] ? "input-error" : ""
                   }`}
                   max={key === "rating" ? 10 : undefined}

@@ -8,7 +8,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme="catppuccin-mocha">
+    <html lang="es" data-theme="catppuccin-mocha">
       <head />
       <body
         className={`${inter.className} bg-base-200 text-neutral-300  h-screen`}
