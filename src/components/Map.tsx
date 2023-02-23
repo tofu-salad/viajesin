@@ -52,7 +52,7 @@ export default function Map({ logs }: TravelLogMapProps) {
   );
   return (
     <MapContainer
-      className="h-screen w-screen"
+      className="z-0 h-screen w-screen"
       style={{ background: "#171717" }}
       maxBounds={[
         [-90, -180],
