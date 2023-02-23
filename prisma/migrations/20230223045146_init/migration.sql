@@ -46,7 +46,7 @@ CREATE TABLE "VerificationToken" (
 
 -- CreateTable
 CREATE TABLE "travel_log" (
-    "id" INT8 NOT NULL DEFAULT unique_rowid(),
+    "id" INT4 NOT NULL DEFAULT unique_rowid(),
     "user_id" STRING NOT NULL,
     "title" STRING NOT NULL,
     "description" STRING NOT NULL,

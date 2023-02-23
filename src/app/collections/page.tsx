@@ -10,7 +10,10 @@ export default async function CollectionPage() {
   return (
     <main className="flex gap-2 m-2">
       {logs.map((log) => (
-        <div className="card w-96 bg-base-100 shadow-xl border border-gray-700">
+        <div
+          className="card w-96 bg-base-100 shadow-xl border border-gray-700"
+          key={log.id}
+        >
           <figure className="px-10 pt-10">
             <img src={log.image} alt={log.description} className="rounded-xl" />
           </figure>
