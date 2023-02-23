@@ -2,7 +2,6 @@ lockfileVersion: 5.4
 
 specifiers:
   '@headlessui/react': ^1.7.10
-  '@heroicons/react': ^2.0.15
   '@hookform/resolvers': ^2.9.11
   '@next-auth/prisma-adapter': ^1.0.5
   '@next/font': 13.1.6
@@ -12,11 +11,9 @@ specifiers:
   '@types/react': 18.0.27
   '@types/react-dom': 18.0.10
   autoprefixer: ^10.4.13
-  clsx: ^1.2.1
   daisyui: ^2.50.0
   eslint: 8.33.0
   eslint-config-next: 13.1.6
-  jotai: ^2.0.1
   leaflet: ^1.9.3
   next: 13.1.6
   next-auth: ^4.19.2
@@ -32,7 +29,6 @@ specifiers:
 
 dependencies:
   '@headlessui/react': 1.7.10_biqbaboplfbrettd7655fr4n2y
-  '@heroicons/react': 2.0.15_react@18.2.0
   '@hookform/resolvers': 2.9.11_react-hook-form@7.43.1
   '@next-auth/prisma-adapter': 1.0.5_dg7vpluvw26u4z34xat624ruwa
   '@next/font': 13.1.6
@@ -40,11 +36,9 @@ dependencies:
   '@types/node': 18.13.0
   '@types/react': 18.0.27
   '@types/react-dom': 18.0.10
-  clsx: 1.2.1
   daisyui: 2.50.0_gbtt6ss3tbiz4yjtvdr6fbrj44
   eslint: 8.33.0
   eslint-config-next: 13.1.6_4vsywjlpuriuw3tl5oq6zy5a64
-  jotai: 2.0.1_react@18.2.0
   leaflet: 1.9.3
   next: 13.1.6_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.19.2_3vryta7zmbcsw4rrqf4axjqggm
@@ -98,14 +92,6 @@ packages:
       client-only: 0.0.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-    dev: false
-
-  /@heroicons/react/2.0.15_react@18.2.0:
-    resolution: {integrity: sha512-CZ2dGWgWG3/z5LEoD5D3MEr1syn45JM/OB2aDpw531Ryecgkz2V7TWQ808P0lva7zP003PVW6WlwbofsYyga3A==}
-    peerDependencies:
-      react: '>= 16'
-    dependencies:
-      react: 18.2.0
     dev: false
 
   /@hookform/resolvers/2.9.11_react-hook-form@7.43.1:
@@ -683,11 +669,6 @@ packages:
 
   /client-only/0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
-    dev: false
-
-  /clsx/1.2.1:
-    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
-    engines: {node: '>=6'}
     dev: false
 
   /color-convert/2.0.1:
@@ -1721,18 +1702,6 @@ packages:
 
   /jose/4.11.4:
     resolution: {integrity: sha512-94FdcR8felat4vaTJyL/WVdtlWLlsnLMZP8v+A0Vru18K3bQ22vn7TtpVh3JlgBFNIlYOUlGqwp/MjRPOnIyCQ==}
-    dev: false
-
-  /jotai/2.0.1_react@18.2.0:
-    resolution: {integrity: sha512-b/BpBFkv3nq8HgT6YX5h5/y9VfKIn9OL1dO6gd9bWTgKt6LLe24VIMURTDwSYS888XfubuRQlbepb5IQGAtmcQ==}
-    engines: {node: '>=12.20.0'}
-    peerDependencies:
-      react: '>=17.0.0'
-    peerDependenciesMeta:
-      react:
-        optional: true
-    dependencies:
-      react: 18.2.0
     dev: false
 
   /js-sdsl/4.3.0:

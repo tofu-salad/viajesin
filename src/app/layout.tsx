@@ -11,7 +11,7 @@ export default function RootLayout({
     <html lang="en" data-theme="catppuccin-mocha">
       <head />
       <body
-        className={`${inter.className} bg-base-100 text-neutral-300  h-screen`}
+        className={`${inter.className} bg-base-200 text-neutral-300  h-screen`}
       >
         {children}
       </body>
