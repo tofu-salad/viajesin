@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useEffect, useState } from "react";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
 import { Spinner } from "./LoadingSpinner";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 const travelLogInputs: Record<
   TravelLogKey,
   {
@@ -101,7 +101,7 @@ export default function TravelLogForm({
         dispatch({ type: "SET_CURRENT_MARKER_LOCATION", data: null });
         reset();
         onComplete();
-        window.location.reload();
+        router.reload();
       } else {
         const json = await response.json();
         throw new Error(json.message);
