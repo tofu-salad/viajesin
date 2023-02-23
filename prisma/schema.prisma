@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+    provider = "cockroachdb"
+    url      = env("PRODUCTION_DATABASE_URL")
 }
 
 model Account {
@@ -16,12 +16,12 @@ model Account {
     type              String
     provider          String
     providerAccountId String  @map("provider_account_id")
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
-    expires_at        BigInt?
+    refresh_token     String?
+    access_token      String?
+    expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String? @db.Text
+    id_token          String?
     session_state     String?
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -57,7 +57,7 @@ model VerificationToken {
 }
 
 model TravelLog {
-    id          Int      @id @default(autoincrement())
+    id          Int      @id @default(sequence())
     user        User     @relation(fields: [userId], references: [id])
     userId      String   @map("user_id")
     title       String
