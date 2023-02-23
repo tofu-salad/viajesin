@@ -18,7 +18,9 @@ export default async function CollectionPage() {
             <img
               src={log.image}
               alt={log.description}
-              className="rounded-xl bg-cover"
+              width={320}
+              height={176}
+              className="rounded-xl bg-cover w-80 h-44 object-cover"
             />
           </figure>
           <div className="card-body items-center text-center">
