@@ -18,7 +18,7 @@ model Account {
     providerAccountId String  @map("provider_account_id")
     refresh_token     String? @db.Text
     access_token      String? @db.Text
-    expires_at        Int?
+    expires_at        BigInt?
     token_type        String?
     scope             String?
     id_token          String? @db.Text
@@ -57,7 +57,7 @@ model VerificationToken {
 }
 
 model TravelLog {
-    id          Int      @id @default(autoincrement())
+    id          BigInt   @id @default(autoincrement())
     user        User     @relation(fields: [userId], references: [id])
     userId      String   @map("user_id")
     title       String

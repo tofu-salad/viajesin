@@ -7,7 +7,7 @@ CREATE TABLE "Account" (
     "provider_account_id" STRING NOT NULL,
     "refresh_token" STRING,
     "access_token" STRING,
-    "expires_at" INT4,
+    "expires_at" INT8,
     "token_type" STRING,
     "scope" STRING,
     "id_token" STRING,
@@ -46,7 +46,7 @@ CREATE TABLE "VerificationToken" (
 
 -- CreateTable
 CREATE TABLE "travel_log" (
-    "id" INT4 NOT NULL DEFAULT unique_rowid(),
+    "id" INT8 NOT NULL DEFAULT unique_rowid(),
     "user_id" STRING NOT NULL,
     "title" STRING NOT NULL,
     "description" STRING NOT NULL,
