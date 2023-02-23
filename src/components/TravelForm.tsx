@@ -101,7 +101,7 @@ export default function TravelLogForm({
         dispatch({ type: "SET_CURRENT_MARKER_LOCATION", data: null });
         reset();
         onComplete();
-      router.push("/map");
+        window.location.reload();
       } else {
         const json = await response.json();
         throw new Error(json.message);
