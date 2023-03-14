@@ -1,14 +1,14 @@
 services:
   db:
-    image: postgres:15.1-alpine
+    image: mysql 
     restart: always
     ports:
-      - 5432:5432
+      - 3306:3306
     environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: postgres
-      POSTGRES_DB: viajesin
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: viajesin
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - mysqldata:/var/lib/mysql
 volumes:
-  pgdata:
+  mysqldata:
