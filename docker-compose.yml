@@ -1,6 +1,6 @@
 services:
   db:
-    image: mysql 
+    image: postgres:alpine-15.3
     restart: always
     ports:
       - 3306:3306
@@ -8,7 +8,3 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: viajesin
-    volumes:
-      - mysqldata:/var/lib/mysql
-volumes:
-  mysqldata:

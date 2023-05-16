@@ -18,6 +18,12 @@ function TravelLogReducer(
     case "SET_SIDEBAR_VISIBLE": {
       return { ...state, sideBarVisible: action.data };
     }
+    case "UPDATE_TRAVEL_LOG": {
+      const updatedLogs = state.logs.map((log) =>
+        log.id === action.data.id ? { ...log, ...action.data } : log
+      );
+      return { ...state, logs: updatedLogs };
+    }
     default:
       return state;
   }

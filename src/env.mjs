@@ -7,6 +7,7 @@ const server = z.object({
   DISCORD_CLIENT_SECRET: z.string(),
   NEXTAUTH_URL: z.string(),
   NEXTAUTH_SECRET: z.string(),
+  DATABASE_URL: z.string(),
 });
 
 const client = z.object({});
@@ -23,6 +24,7 @@ const processEnv = {
   DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    DATABASE_RUL: process.env.DATABASE_URL
 };
 
 // Don't touch the part below

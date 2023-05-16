@@ -1,11 +1,11 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import DiscordProvider from "next-auth/providers/discord";
-import prisma from "@/lib/prismadb";
 import { env } from "@/env.mjs";
+import { DrizzleAdapterPg } from "@/db/drizzle-adapter";
+import { db } from "@/db/db";
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: DrizzleAdapterPg(db),
   secret: env.NEXTAUTH_SECRET,
   providers: [
     DiscordProvider({

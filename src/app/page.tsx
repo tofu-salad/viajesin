@@ -1,4 +1,7 @@
 import SignIn from "@/components/Login";
+import { Button } from "@/components/ui/button";
+import { db } from "@/db/db";
+import { users } from "@/db/schema";
 import { getCurrentUser } from "@/lib/session";
 import { getProviders } from "next-auth/react";
 import Link from "next/link";
@@ -6,6 +9,8 @@ import Link from "next/link";
 export default async function Home() {
   const providers = await getProviders();
   const session = await getCurrentUser();
+  const allUsers = await db.select().from(users);
+  console.log(allUsers);
 
   return (
     <div>
@@ -28,9 +33,11 @@ export default async function Home() {
                   </div>
                 </div>
                 <div>Bienvenido {session.name}</div>
-                <Link href="/map" className="btn btn-primary">
-                  Ir al Mapa
-                </Link>
+                <Button>
+                  <Link href="/map" className="btn btn-primary">
+                    Ir al Mapa
+                  </Link>
+                </Button>
               </section>
             )}
           </div>

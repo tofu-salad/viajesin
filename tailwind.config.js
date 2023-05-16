@@ -1,58 +1,76 @@
+const { fontFamily } = require("tailwindcss/defaultTheme");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: ["class"],
   theme: {
-    extend: {},
-  },
-  plugins: [require("daisyui")],
-  daisyui: {
-    themes: [
-      {
-        "catppuccin-latte": {
-          primary: "#1e66f5", // blue
-          secondary: "#ea76cb", // pink
-          accent: "#179299", // teal
-          neutral: "#dce0e8", // crust
-          "base-100": "#eff1f5", // base
-          info: "#209fb5", // sapphire
-          success: "#40a02b", // green
-          warning: "#df8e1d", // yellow
-          error: "#d20f39", // red
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
         },
-        "catppuccin-frappe": {
-          primary: "#8caaee", // blue
-          secondary: "#f4b8e4", // pink
-          accent: "#81c8be", // teal
-          neutral: "#232634", // crust
-          "base-100": "#303446", // base
-          info: "#85c1dc", // sapphire
-          success: "#a6d189", // green
-          warning: "#e5c890", // yellow
-          error: "#e78284", // red
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
         },
-        "catppuccin-macchiato": {
-          primary: "#8aadf4", // blue
-          secondary: "#f5bde6", // pink
-          accent: "#8bd5ca", // teal
-          neutral: "#181926", // crust
-          "base-100": "#24273a", // base
-          info: "#7dc4e4", // sapphire
-          success: "#a6da95", // green
-          warning: "#eed49f", // yellow
-          error: "#ed8796", // red
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
         },
-        "catppuccin-mocha": {
-          primary: "#89b4fa", // blue
-          secondary: "#f5c2e7", // pink
-          accent: "#94e2d5", // teal
-          neutral: "#11111b", // crust
-          "base-100": "#1e1e2e", // base
-          info: "#74c7ec", // sapphire
-          success: "#a6e3a1", // green
-          warning: "#f9e2af", // yellow
-          error: "#f38ba8", // red
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
         },
       },
-    ],
+      borderRadius: {
+        lg: `var(--radius)`,
+        md: `calc(var(--radius) - 2px)`,
+        sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)", ...fontFamily.sans],
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: 0 },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: 0 },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+    },
   },
+  plugins: [require("tailwindcss-animate")],
 };

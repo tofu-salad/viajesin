@@ -1,6 +1,5 @@
 "use client";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
-import { Transition } from "@headlessui/react";
 import { useContext, useEffect } from "react";
 import TravelLogForm from "./TravelForm";
 
@@ -36,15 +35,6 @@ export default function MapMenu() {
         </button>
       </div>
       <div className="fixed top-0 right-0 overflow-auto md:relative md:h-[90%]">
-        <Transition
-          show={state.sideBarVisible}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
-        >
           <div className="md:w-full md:h-full w-screen h-screen ">
             <TravelLogForm
               onCancel={() =>
@@ -55,7 +45,6 @@ export default function MapMenu() {
               }
             />
           </div>
-        </Transition>
       </div>
     </div>
   );
