@@ -1,10 +1,10 @@
 import { eq } from "drizzle-orm";
 import type { Adapter, AdapterAccount } from "next-auth/adapters";
 import { v4 as uuid } from "uuid";
-import { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { accounts, sessions, users, verificationTokens } from "./schema";
+import { NodePgDatabase } from "drizzle-orm/node-postgres";
 
-export function DrizzleAdapterPg(client: PostgresJsDatabase): Adapter {
+export function DrizzleAdapterPg(client: NodePgDatabase): Adapter {
   return {
     createUser: async (data) => {
       return client

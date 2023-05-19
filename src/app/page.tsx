@@ -1,48 +1,83 @@
 import SignIn from "@/components/Login";
-import { Button } from "@/components/ui/button";
-import { db } from "@/db/db";
-import { users } from "@/db/schema";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { getCurrentUser } from "@/lib/session";
 import { getProviders } from "next-auth/react";
 import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
+import { MapIcon } from "lucide-react";
+import { db } from "@/db/db";
+import { travelLogs } from "@/db/schema";
+import { desc, eq } from "drizzle-orm";
+import { LastVisitedPlaces } from "@/components/LastVisitedPlaces";
+import { UserSession } from "../../types/next-auth";
+import SignOutButton from "@/components/ui/signout-button";
 
 export default async function Home() {
   const providers = await getProviders();
   const session = await getCurrentUser();
-  const allUsers = await db.select().from(users);
-  console.log(allUsers);
+
+  const lastVisitedPlaces = session
+    ? await db
+        .select()
+        .from(travelLogs)
+        .where(eq(travelLogs.userId, session.id))
+        .limit(5)
+        .orderBy(desc(travelLogs.visitDate))
+    : [];
 
   return (
     <div>
-      <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content text-center">
-          <div className="max-w-md">
-            <h1 className="text-5xl font-bold">Viajesin</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p>
-            {!session ? (
-              <SignIn providers={providers} />
-            ) : (
-              <section>
-                <div className="avatar">
-                  <div className="w-24 rounded-full">
-                    <img src={session.image!} alt={"Avatar del usuario"} />
-                  </div>
-                </div>
-                <div>Bienvenido {session.name}</div>
-                <Button>
-                  <Link href="/map" className="btn btn-primary">
-                    Ir al Mapa
-                  </Link>
-                </Button>
-              </section>
-            )}
-          </div>
+      {!session ? (
+        <SignIn providers={providers} />
+      ) : (
+        <div className="grid grid-rows-2 md:grid-cols-2 md:grid-rows-1 gap-2 pt-4">
+          <LoggedIn session={session} />
+          <LastVisitedPlaces logs={lastVisitedPlaces} />
         </div>
-      </div>
+      )}
     </div>
+  );
+}
+
+function LoggedIn({ session }: { session: UserSession }) {
+  const fallBackLetters = session.name
+    ?.split(" ")
+    .map((word) => word.charAt(0))
+    .join(" ");
+
+  return (
+    <Card className="w-[350px] md:w-full md:h-[375px] flex justify-between flex-col">
+      <CardHeader className="flex items-center">
+        <CardTitle className="text-center">{session.name}</CardTitle>
+        <Avatar className="w-20 h-20 md:w-40 md:h-40">
+          <AvatarImage src={session.image!} alt={session.name!} />
+          <AvatarFallback>{fallBackLetters}</AvatarFallback>
+        </Avatar>
+      </CardHeader>
+      <CardContent>
+        <p className="truncate text-sm text-gray-500 text-center">
+          {session.email}
+        </p>
+      </CardContent>
+      <CardFooter className="grid gap-2 grid-cols-2 ">
+        <Link
+          className={`${buttonVariants({
+            variant: "default",
+          })} w-full text-xs flex justify-between`}
+          href={"/map"}
+        >
+          Mapa
+          <MapIcon className="w-4 h-4" />
+        </Link>
+        <SignOutButton />
+      </CardFooter>
+    </Card>
   );
 }

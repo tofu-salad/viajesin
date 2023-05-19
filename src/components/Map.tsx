@@ -11,6 +11,7 @@ type TravelLogMapProps = {
   logs: TravelLogWithId[];
 };
 L.Map.prototype.options.attributionControl = false;
+L.Map.prototype.options.zoomControl = false
 
 type InitMapProps = {
   onMapClick: (event: L.LeafletMouseEvent) => void;

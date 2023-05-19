@@ -21,8 +21,15 @@ export const TravelLogWithId = TravelLog.extend({
 export const TravelLogWithUserId = TravelLog.extend({
   userId: z.string().trim().min(1),
 });
+
+export const TravelLogWithUserIdAndID = TravelLog.extend({
+  id: z.string().trim().min(1),
+  userId: z.string().trim().min(1),
+});
+
 export const TravelLogKeys = TravelLog.keyof().Enum;
 export type TravelLogKey = keyof typeof TravelLogKeys;
 export type TravelLog = z.infer<typeof TravelLog>;
 export type TravelLogWithUserId = z.infer<typeof TravelLogWithUserId>;
 export type TravelLogWithId = z.infer<typeof TravelLogWithId>;
+export type TravelLogWithUserIdAndID = z.infer<typeof TravelLogWithUserIdAndID>

@@ -7,3 +7,11 @@ declare module "next-auth" {
     } & DefaultSession["user"];
   }
 }
+export type UserSession =
+  | {
+      id: string;
+    } & {
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
+    };

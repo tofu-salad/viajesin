@@ -1,16 +1,18 @@
 import "./globals.css";
 
-export default function RootLayout({
-    children,
+export default async function RootLayout({
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    return (
-        <html lang="es" data-theme="catppuccin-mocha">
-            <head />
-            <body className={` bg-base-200 text-neutral-300  h-screen`}>
-                {children}
-            </body>
-        </html>
-    );
+  return (
+    <html lang="es">
+      <head />
+      <body className="">
+        <main className="flex items-center justify-center h-screen overflow-hidden bg-gradient-to-tr from-slate-100 to-orange-100">
+          {children}
+        </main>
+      </body>
+    </html>
+  );
 }

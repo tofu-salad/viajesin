@@ -1,6 +1,7 @@
 "use client";
 import { BuiltInProviderType } from "next-auth/providers";
 import { ClientSafeProvider, LiteralUnion, signIn } from "next-auth/react";
+import { Button } from "./ui/button";
 
 type SignInProps = {
   providers: Record<
@@ -15,7 +16,7 @@ export default function SignIn({ providers }: SignInProps) {
       {providers
         ? Object.values(providers).map((provider) => (
             <div key={provider.name}>
-              <button
+              <Button
                 onClick={() => signIn(provider.id)}
                 className="btn bg-indigo-500 hover:bg-indigo-700"
               >
@@ -23,7 +24,7 @@ export default function SignIn({ providers }: SignInProps) {
                   <DiscordIcon />
                   Iniciar sesión con {provider.name}
                 </span>
-              </button>
+              </Button>
             </div>
           ))
         : null}

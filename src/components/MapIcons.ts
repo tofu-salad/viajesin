@@ -1,7 +1,7 @@
 import { DivIcon } from "leaflet";
 
 export const DefaultIcon = new DivIcon({
-  className: "leaflet-custom-icon text-primary",
+  className: "leaflet-custom-icon text-primary text-slate-200",
   iconAnchor: [16, 20],
   popupAnchor: [0, -20],
   iconSize: [32, 32],
@@ -14,7 +14,7 @@ export const DefaultIcon = new DivIcon({
 });
 
 export const ClickIcon = new DivIcon({
-  className: "leaflet-custom-icon text-secondary",
+  className: "leaflet-custom-icon text-red-200",
   iconAnchor: [16, 20],
   popupAnchor: [0, -20],
   iconSize: [32, 32],

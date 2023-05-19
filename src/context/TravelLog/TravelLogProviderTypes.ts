@@ -1,13 +1,10 @@
-import {
-  TravelLog,
-  TravelLogWithId,
-} from "@/models/TravelLog.model";
+import { TravelLog } from "@/models/TravelLog.model";
 import { Dispatch } from "react";
 
 export type TravelLogState = {
   currentMarkerLocation: L.LatLng | null;
   sideBarVisible: boolean;
-  logs: TravelLogWithId[];
+  formData: TravelLog;
 };
 
 type TravelLogAction = {
@@ -22,16 +19,16 @@ type SetSidebarVisible = TravelLogAction & {
   type: "SET_SIDEBAR_VISIBLE";
   data: boolean;
 };
-type UpdateTravelLogAction = TravelLogAction & {
-  type: "UPDATE_TRAVEL_LOG";
+type SetFormData = TravelLogAction & {
+  type: "SET_FORM_DATA";
   data: TravelLog;
 };
 export type TravelLogActionType =
   | "SET_CURRENT_MARKER_LOCATION"
   | "SET_SIDEBAR_VISIBLE"
-  | "UPDATE_TRAVEL_LOG";
+  | "SET_FORM_DATA";
 export type TravelLogActionTypes =
   | SetCurrentMarkerLocationAction
   | SetSidebarVisible
-  | UpdateTravelLogAction;
+  | SetFormData;
 export type TravelLogDispatch = Dispatch<TravelLogActionTypes>;

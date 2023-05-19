@@ -7,7 +7,6 @@ import {
   real,
 } from "drizzle-orm/pg-core";
 import { ProviderType } from "next-auth/providers";
-import { v4 as uuid } from "uuid";
 
 export const users = pgTable("users", {
   id: text("id").primaryKey(),
@@ -60,7 +59,7 @@ export const verificationTokens = pgTable(
 );
 
 export const travelLogs = pgTable("travel_log", {
-  id: text("id").primaryKey().default(uuid()),
+  id: text("id").primaryKey(),
   title: text("title").notNull(),
   description: text("description").notNull(),
   image: text("image").notNull(),

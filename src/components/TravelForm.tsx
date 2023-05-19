@@ -5,6 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useEffect, useState } from "react";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
 import { Spinner } from "./LoadingSpinner";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+import { Label } from "./ui/label";
+import { ScrollArea } from "./ui/scroll-area";
 const travelLogInputs: Record<
   TravelLogKey,
   {
@@ -43,38 +48,33 @@ const travelLogInputs: Record<
 
 const now = new Date();
 const formattedDate = now.toISOString().substring(0, 10);
-type TravelLogFormProps = {
-  onComplete: () => void;
-  onCancel: () => void;
-};
-export default function TravelLogForm({
-  onCancel,
-  onComplete,
-}: TravelLogFormProps) {
+export default function TravelLogForm() {
   const [formError, setFormError] = useState("");
   const { state, dispatch } = useContext(TravelLogContext);
-  const isOpen = state.sideBarVisible;
   const [isLoading, setIsLoading] = useState(false);
 
   const {
     reset,
     register,
+    watch,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm<TravelLog>({
     resolver: zodResolver(TravelLog),
     defaultValues: {
-      title: "",
-      description: "",
-      latitude: state.currentMarkerLocation?.lat || 90,
-      longitude: state.currentMarkerLocation?.lng || 180,
-      rating: 5,
+      title: state.formData.title,
+      description: state.formData.description,
+      latitude: state.currentMarkerLocation?.lat || state.formData.latitude,
+      longitude: state.currentMarkerLocation?.lng || state.formData.longitude,
+      image: state.formData.image,
+      rating: state.formData.rating,
       // @ts-ignore
       visitDate: formattedDate,
     },
   });
 
+  // dispatch({ type: "UPDATE_TRAVEL_LOG", data: formData });
   useEffect(() => {
     if (!state.currentMarkerLocation) return;
     setValue("latitude", Number(state.currentMarkerLocation.lat.toFixed(6)));
@@ -87,7 +87,7 @@ export default function TravelLogForm({
       const session = await fetch("/api/auth/session");
       const sessionData = await session.json();
       const userId = sessionData.user.id;
-      const response = await fetch("/api/travel-logs", {
+      const response = await fetch("/api/travellogs", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -98,7 +98,6 @@ export default function TravelLogForm({
       if (response.ok) {
         dispatch({ type: "SET_CURRENT_MARKER_LOCATION", data: null });
         reset();
-        onComplete();
         window.location.reload();
       } else {
         const json = await response.json();
@@ -115,29 +114,19 @@ export default function TravelLogForm({
       setIsLoading(false);
     }
   };
+  const handleInputChange = (_k: TravelLogKey, _e: EventTarget) => {
+    const formData = watch();
+    dispatch({ type: "SET_FORM_DATA", data: formData });
+  };
 
   return (
-    <div className="bg-base-100  md:rounded-lg py-4">
-      <div className="flex justify-end  mx-auto max-w-md px-4">
-        <button
-          onClick={() => {
-            dispatch({ type: "SET_CURRENT_MARKER_LOCATION", data: null });
-            onCancel();
-            reset();
-          }}
-          className={`btn btn-secondary btn-sm mt-4 ${
-            isOpen ? "md:hidden" : "hidden"
-          }`}
-        >
-          X
-        </button>
-      </div>
+    <ScrollArea className="h-[575px] md:h-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-2 mx-auto max-w-md px-4"
+        className="flex flex-col gap-2 mx-auto w-[350px] h-full py-4 px-4"
       >
         {formError && (
-          <div className="alert alert-error shadow-lg">
+          <div className="">
             <div>
               <WarnIcon />
               <span>{formError}</span>
@@ -148,44 +137,35 @@ export default function TravelLogForm({
           const key = name as TravelLogKey;
           return (
             <div key={name} className="flex flex-col gap-2">
-              <label className="label">
-                <span>{value.label || key}</span>
-              </label>
+              <Label htmlFor={name}>{value.label || key}</Label>
               {value.type === "textarea" ? (
-                <textarea
-                  {...register(key)}
-                  className={`textarea textarea-bordered ${
-                    errors[key] ? "textarea-error" : ""
-                  }`}
+                <Textarea
+                  {...register(key, {
+                    onChange: (e) => handleInputChange(key, e.target.value),
+                  })}
+                  className={` ${errors[key] ? "border-red-700" : ""} `}
                 />
               ) : (
-                <input
+                <Input
+                  id={name}
                   type={value.type}
-                  {...register(key)}
-                  className={`input input-bordered  ${
-                    errors[key] ? "input-error" : ""
-                  }`}
-                  max={key === "rating" ? 10 : undefined}
-                  min={key === "rating" ? 0 : undefined}
+                  className={`${errors[key] ? "border-red-700" : ""}`}
+                  {...register(key, {
+                    onChange: (e) => handleInputChange(key, e.target.value),
+                  })}
                 />
               )}
               {errors[key] && (
-                <span className="text-error">{errors[key]?.message}</span>
+                <span className="text-red-700">{errors[key]?.message}</span>
               )}
             </div>
           );
         })}
-        {/* TODO: Make both latitude and longitude be in the same row */}
-        {/* <div> */}
-        {/*   <label>Latitud y longitud</label> */}
-        {/*   <input {...register("latitude")}></input> */}
-        {/*   <input {...register("longitude")}></input> */}
-        {/* </div> */}
-        <button disabled={isLoading} className="btn">
+        <Button disabled={isLoading}>
           {isLoading ? <Spinner /> : "Crear"}
-        </button>
+        </Button>
       </form>
-    </div>
+    </ScrollArea>
   );
 }
 
