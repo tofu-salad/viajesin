@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { Button } from "./ui/button";
 import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -23,13 +23,13 @@ export default function DeleteTravelLog({ log }: { log: TravelLogWithId }) {
   }
   const router = useRouter();
 
-  async function onSubmit() {
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault();
     try {
       setIsLoading(true);
-      const response = await fetch("/api/travellogs", {
+      const response = await fetch(`/api/travellogs?id=${log.id}`, {
         method: "DELETE",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ log: log.id }),
       });
       if (response.ok) {
         router.refresh();
@@ -61,12 +61,14 @@ export default function DeleteTravelLog({ log }: { log: TravelLogWithId }) {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button disabled={isLoading}>Cancelar</Button>
+          <Button disabled={isLoading} onClick={handleIsOpen}>
+            Cancelar
+          </Button>
           <Button
+            onClick={onSubmit}
             disabled={isLoading}
-            type="submit"
-            onSubmit={onSubmit}
             variant={"destructive"}
+            type="submit"
           >
             {isLoading ? <Spinner /> : "Continuar"}
           </Button>

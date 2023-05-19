@@ -8,7 +8,7 @@ export default function SignOutButton() {
   return (
     <Button
       variant={"secondary"}
-      onClick={() => signOut}
+      onClick={() => signOut()}
       className="border flex justify-between hover:bg-secondary/50"
     >
       <LogOut className="w-4 h-4"></LogOut>

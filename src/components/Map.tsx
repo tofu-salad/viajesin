@@ -68,7 +68,7 @@ export default function Map({ logs }: TravelLogMapProps) {
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'"
-        maxZoom={10}
+        maxZoom={15}
         minZoom={3}
       />
       <InitMap logs={logs} onMapClick={onMapClick} />
@@ -105,9 +105,7 @@ export default function Map({ logs }: TravelLogMapProps) {
             <img
               src={log.image}
               alt={log.title}
-              width={255}
-              height={90}
-              className="h-36 rounded-lg object-cover mb-2"
+              className="h-36 rounded-lg object-cover mb-2 w-full"
             />
             <ScrollArea className="h-24">
               <p className="mt-6 border-l-2 pl-4 italic pr-2">
