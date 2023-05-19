@@ -9,6 +9,7 @@ import "leaflet/dist/leaflet.css";
 import EditTravelLog from "./EditTravelLog";
 import { Star } from "lucide-react";
 import { ScrollArea } from "./ui/scroll-area";
+import DeleteTravelLog from "./DeleteTravelLog";
 
 type TravelLogMapProps = {
   logs: TravelLogWithId[];
@@ -113,7 +114,8 @@ export default function Map({ logs }: TravelLogMapProps) {
                 {log.description}
               </p>
             </ScrollArea>
-            <div className="flex items-center justify-end p-0 m-0">
+            <div className="flex items-center justify-end gap-1">
+              <DeleteTravelLog log={log} />
               <EditTravelLog log={log} />
             </div>
           </Popup>

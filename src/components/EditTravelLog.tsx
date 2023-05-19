@@ -16,7 +16,7 @@ import {
   TravelLogWithId,
 } from "@/models/TravelLog.model";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AlertCircle, Delete, Edit } from "lucide-react";
+import { AlertCircle, Edit } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Textarea } from "./ui/textarea";
@@ -170,28 +170,3 @@ const logInputs: Record<
     label: "Fecha de la visita",
   },
 };
-
-export function AlertDialogDemo() {
-  return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="outline">Show Dialog</Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  )
-}
-
-
