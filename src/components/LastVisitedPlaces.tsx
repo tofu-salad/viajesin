@@ -22,7 +22,7 @@ export function LastVisitedPlaces({ logs }: { logs: TravelLogWithId[] }) {
                 <div className="flex justify-between w-full pr-1 items-end">
                   <span className="hover:underline">{log.title}</span>
                   <span className="text-gray-500 text-sm">
-                    {log.visitDate.toDateString()}
+                    {log.visitDate.toLocaleDateString()}
                   </span>
                 </div>
               </AccordionTrigger>

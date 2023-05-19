@@ -5,6 +5,7 @@ import TravelLogForm from "./TravelForm";
 import { Button } from "./ui/button";
 import { ChevronLeft } from "lucide-react";
 import { Card } from "./ui/card";
+import EditTravelLog from "./EditTravelLog";
 
 export default function MapMenu() {
   const { state, dispatch } = useContext(TravelLogContext);

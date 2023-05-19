@@ -32,4 +32,23 @@ export type TravelLogKey = keyof typeof TravelLogKeys;
 export type TravelLog = z.infer<typeof TravelLog>;
 export type TravelLogWithUserId = z.infer<typeof TravelLogWithUserId>;
 export type TravelLogWithId = z.infer<typeof TravelLogWithId>;
-export type TravelLogWithUserIdAndID = z.infer<typeof TravelLogWithUserIdAndID>
+export type TravelLogWithUserIdAndID = z.infer<typeof TravelLogWithUserIdAndID>;
+
+const editFormErrors = {
+  title: "El titulo no puede estar vacío.",
+  description: "La descripción no puede estar vacía.",
+  image: "El texto debe ser un enlace.",
+};
+export const EditFormData = z.object({
+  title: z.string().trim().min(1, editFormErrors.title),
+  description: z.string().trim().min(1, editFormErrors.description),
+  image: z.string().url(editFormErrors.image),
+  rating: z.coerce.number().min(0).max(10).default(5),
+  visitDate: z.coerce.date(),
+});
+export const EditFormDataWithId = EditFormData.extend({
+  id: z.string().trim().min(1),
+});
+export type EditFormDataType = z.infer<typeof EditFormData>;
+export const EditFormDataKeys = EditFormData.keyof().Enum;
+export type EditFormDataKey = keyof typeof EditFormDataKeys;

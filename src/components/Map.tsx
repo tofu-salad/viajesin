@@ -6,12 +6,15 @@ import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import { ClickIcon, DefaultIcon } from "./MapIcons";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
 import "leaflet/dist/leaflet.css";
+import EditTravelLog from "./EditTravelLog";
+import { Star } from "lucide-react";
+import { ScrollArea } from "./ui/scroll-area";
 
 type TravelLogMapProps = {
   logs: TravelLogWithId[];
 };
 L.Map.prototype.options.attributionControl = false;
-L.Map.prototype.options.zoomControl = false
+L.Map.prototype.options.zoomControl = false;
 
 type InitMapProps = {
   onMapClick: (event: L.LeafletMouseEvent) => void;
@@ -81,15 +84,38 @@ export default function Map({ logs }: TravelLogMapProps) {
           icon={DefaultIcon}
         >
           <Popup className="w-80">
-            <p className="text-neutral text-2xl">{log.title}</p>
-            <p>Puntuacion: {log.rating}</p>
+            <h2
+              className="
+          scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0
+          "
+            >
+              {log.title}
+            </h2>
+            <div className="text-sm text-muted-foreground flex items-center justify-between p-2 gap-1">
+              <span>
+                {new Date(log.visitDate.toString()).toLocaleDateString()}
+              </span>
+
+              <span className="flex gap-1 items-center">
+                {log.rating} / 10
+                <Star className="text-orange-800 w-4 h-4" />
+              </span>
+            </div>
             <img
               src={log.image}
               alt={log.title}
-              className="w-full rounded-lg"
+              width={255}
+              height={90}
+              className="h-36 rounded-lg object-cover mb-2"
             />
-            <p>{log.description}</p>
-            <p>{new Date(log.visitDate.toString()).toLocaleDateString()}</p>
+            <ScrollArea className="h-24">
+              <p className="mt-6 border-l-2 pl-4 italic pr-2">
+                {log.description}
+              </p>
+            </ScrollArea>
+            <div className="flex items-center justify-end p-0 m-0">
+              <EditTravelLog log={log} />
+            </div>
           </Popup>
         </Marker>
       ))}

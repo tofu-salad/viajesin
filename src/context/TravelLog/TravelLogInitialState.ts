@@ -1,3 +1,4 @@
+import format from "date-fns/format";
 import { TravelLogState } from "./TravelLogProviderTypes";
 
 export default {
@@ -5,7 +6,7 @@ export default {
   sideBarVisible: false,
   formData: {
     rating: 5,
-    visitDate: new Date(),
+    visitDate: format(new Date(), "yyyy-MM-dd") as unknown as Date,
     description: "",
     image: "",
     title: "",

@@ -1,6 +1,10 @@
 import { db } from "@/db/db";
 import { travelLogs } from "@/db/schema";
-import { TravelLogWithUserId } from "@/models/TravelLog.model";
+import {
+  EditFormDataWithId,
+  TravelLogWithUserId,
+} from "@/models/TravelLog.model";
+import { eq } from "drizzle-orm";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -27,7 +31,7 @@ export default async function handler(
       const createLog = await db
         .insert(travelLogs)
         .values({
-            id: crypto.randomUUID(),
+          id: crypto.randomUUID(),
           image,
           title,
           rating,
@@ -39,6 +43,25 @@ export default async function handler(
         })
         .returning();
       res.status(200).json(createLog);
+    } else if (req.method === "PUT") {
+      const { id, image, title, rating, visitDate, description } =
+        await EditFormDataWithId.parseAsync(req.body);
+      const updateLog = db
+        .update(travelLogs)
+        .set({
+          image,
+          title,
+          rating,
+          visitDate,
+          description,
+        })
+        .where(eq(travelLogs.id, id))
+        .returning({ id: travelLogs.id })
+        .then((res) => res[0]);
+
+      res
+        .status(200)
+        .json({ message: `travel-log ${updateLog} edited correctly` });
     } else {
       res.status(405).json({ message: "Not supported" });
     }
