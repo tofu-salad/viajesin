@@ -19,3 +19,5 @@ pnpm run prismaDev
 ```
 
 ## To run the App: `pnpm run dev`
+
+hola 
