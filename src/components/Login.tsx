@@ -3,7 +3,7 @@ import { BuiltInProviderType } from "next-auth/providers";
 import { ClientSafeProvider, LiteralUnion, signIn } from "next-auth/react";
 import { Button } from "./ui/button";
 
-type SignInProps = {
+export type SignInProps = {
   providers: Record<
     LiteralUnion<BuiltInProviderType, string>,
     ClientSafeProvider
