@@ -4,7 +4,7 @@ import {
   EditFormDataWithId,
   TravelLogWithUserId,
 } from "@/models/TravelLog.model";
-import { InferModel, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(

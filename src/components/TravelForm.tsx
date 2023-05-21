@@ -48,7 +48,7 @@ export default function TravelLogForm() {
       const session = await fetch("/api/auth/session");
       const sessionData = await session.json();
       const userId = sessionData.user.id;
-      const response = await fetch("/api/travellogs", {
+      const response = await fetch("/api/travel_logs", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({

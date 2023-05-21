@@ -1,4 +1,4 @@
-import SignIn from "@/components/Login";
+import SignIn, { SignInProps } from "@/components/Login";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
@@ -16,8 +16,8 @@ import { db } from "@/db/db";
 import { travelLogs } from "@/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { LastVisitedPlaces } from "@/components/LastVisitedPlaces";
-import { UserSession } from "../../types/next-auth";
 import SignOutButton from "@/components/ui/signout-button";
+import { UserSession } from "@/types/next-auth";
 
 export default async function Home() {
   const providers = await getProviders();
@@ -35,7 +35,7 @@ export default async function Home() {
   return (
     <div>
       {!session ? (
-        <SignIn providers={providers} />
+        <Landing providers={providers} />
       ) : (
         <div className="grid grid-rows-2 md:grid-cols-2 md:grid-rows-1 gap-2 pt-4">
           <LoggedIn session={session} />
@@ -79,5 +79,13 @@ function LoggedIn({ session }: { session: UserSession }) {
         <SignOutButton />
       </CardFooter>
     </Card>
+  );
+}
+
+function Landing({ providers }: SignInProps) {
+  return (
+    <div>
+      <SignIn providers={providers} />
+    </div>
   );
 }

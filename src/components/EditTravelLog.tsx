@@ -57,7 +57,7 @@ export default function EditTravelLog({ log }: { log: TravelLogWithId }) {
     try {
       setFormError("");
       setIsLoading(true);
-      const response = await fetch("/api/travellogs", {
+      const response = await fetch("/api/travel_logs", {
         method: "PUT",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ ...data, id: log.id }),
