@@ -1,9 +1,8 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { Button } from "./ui/button";
 import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { TravelLogWithId } from "@/models/TravelLog.model";
-import { Spinner } from "./LoadingSpinner";
 import {
   Dialog,
   DialogContent,
@@ -13,9 +12,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
+import { Spinner } from "./ui/loading-spinner";
+import TravelLogContext from "@/context/TravelLog/TravelLogContext";
 
 export default function DeleteTravelLog({ log }: { log: TravelLogWithId }) {
   const [open, setIsOpen] = useState<boolean>(false);
+  const { dispatch } = useContext(TravelLogContext);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>("");
   function handleIsOpen() {
@@ -47,8 +49,14 @@ export default function DeleteTravelLog({ log }: { log: TravelLogWithId }) {
   return (
     <Dialog open={open} onOpenChange={handleIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="p-0">
-          <Trash />
+        <Button
+          variant="ghost"
+          className="p-0"
+          onClick={() => {
+            dispatch({ type: "SET_SIDEBAR_VISIBLE", data: false });
+          }}
+        >
+          <Trash className="text-pink-200" />
         </Button>
       </DialogTrigger>
       <DialogContent>

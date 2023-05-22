@@ -80,7 +80,14 @@
   }
 }
 
+/* Leaflet  */
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
   @apply !bg-secondary;
+}
+.leaflet-popup-content-wrapper {
+  @apply !border !border-slate-100/10;
+}
+.leaflet-popup-tip {
+  @apply !border !border-slate-100/10;
 }

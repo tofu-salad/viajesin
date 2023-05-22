@@ -5,7 +5,6 @@ import TravelLogForm from "./TravelForm";
 import { Button } from "./ui/button";
 import { ChevronLeft } from "lucide-react";
 import { Card } from "./ui/card";
-import EditTravelLog from "./EditTravelLog";
 
 export default function MapMenu() {
   const { state, dispatch } = useContext(TravelLogContext);
@@ -46,7 +45,7 @@ export default function MapMenu() {
         />
       </Button>
       {state.sideBarVisible && (
-        <Card className="fixed z-[998] bottom-14 md:right-2">
+        <Card className="fixed z-[998] bottom-14 md:right-2 max-h-[]">
           <TravelLogForm />
         </Card>
       )}

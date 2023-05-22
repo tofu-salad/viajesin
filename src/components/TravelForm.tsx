@@ -4,14 +4,14 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useEffect, useState } from "react";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
-import { Spinner } from "./LoadingSpinner";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { ScrollArea } from "./ui/scroll-area";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Scroll } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Spinner } from "./ui/loading-spinner";
 
 export default function TravelLogForm() {
   const { state, dispatch } = useContext(TravelLogContext);
@@ -60,7 +60,7 @@ export default function TravelLogForm() {
         dispatch({ type: "SET_CURRENT_MARKER_LOCATION", data: null });
         dispatch({ type: "SET_FORM_DATA", data: {} });
         reset();
-        router.refresh()
+        router.refresh();
       } else {
         const json = await response.json();
         throw new Error(json.message);
@@ -82,7 +82,7 @@ export default function TravelLogForm() {
   };
 
   return (
-    <ScrollArea className="h-[575px] md:h-full">
+    <ScrollArea className="h-[600px]">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-2 mx-auto w-[350px] h-full py-4 px-4"

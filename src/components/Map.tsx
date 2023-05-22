@@ -3,13 +3,12 @@ import { TravelLogWithId } from "@/models/TravelLog.model";
 import L from "leaflet";
 import { useCallback, useContext, useLayoutEffect } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
-import { ClickIcon, DefaultIcon } from "./MapIcons";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
 import "leaflet/dist/leaflet.css";
-import EditTravelLog from "./EditTravelLog";
 import { Star } from "lucide-react";
 import { ScrollArea } from "./ui/scroll-area";
-import DeleteTravelLog from "./DeleteTravelLog";
+import { ClickIcon, DefaultIcon } from "./Map/map-icons";
+import { PopUpActions } from "./Map/PopUpActions";
 
 type TravelLogMapProps = {
   logs: TravelLogWithId[];
@@ -33,8 +32,9 @@ const InitMap = ({ logs, onMapClick }: InitMapProps) => {
           logs.map((log) => [log.latitude, log.longitude])
         );
         map.fitBounds(bounds);
+        map.setZoom(4);
       } else {
-        map.setZoom(6);
+        map.setZoom(2);
         map.setView([-34, -64]);
       }
       map.on("click", onMapClick);
@@ -57,7 +57,7 @@ export default function Map({ logs }: TravelLogMapProps) {
   );
   return (
     <MapContainer
-      className="z-0 h-screen w-screen"
+      className="z-0 w-screen h-screen"
       style={{ background: "#171717" }}
       maxBounds={[
         [-90, -180],
@@ -84,15 +84,11 @@ export default function Map({ logs }: TravelLogMapProps) {
           position={[log.latitude, log.longitude]}
           icon={DefaultIcon}
         >
-          <Popup className="w-80">
-            <h2
-              className="
-          scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0
-          "
-            >
+          <Popup className="w-80 text-primary">
+            <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 bg-gradient-to-tr from-red-200 to-indigo-500 bg-clip-text text-transparent">
               {log.title}
             </h2>
-            <div className="text-sm text-muted-foreground flex items-center justify-between p-2 gap-1">
+            <div className="text-primary text-sm text-muted-foreground flex items-center justify-between p-2 gap-1">
               <span>
                 {new Date(log.visitDate.toString()).toLocaleDateString()}
               </span>
@@ -108,14 +104,11 @@ export default function Map({ logs }: TravelLogMapProps) {
               className="h-36 rounded-lg object-cover mb-2 w-full"
             />
             <ScrollArea className="h-24">
-              <p className="mt-6 border-l-2 pl-4 italic pr-2">
+              <p className="text-primary mt-6 border-l-2 pl-4 italic pr-2">
                 {log.description}
               </p>
             </ScrollArea>
-            <div className="flex items-center justify-end gap-1">
-              <DeleteTravelLog log={log} />
-              <EditTravelLog log={log} />
-            </div>
+            <PopUpActions log={log} />
           </Popup>
         </Marker>
       ))}

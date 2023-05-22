@@ -4,7 +4,7 @@ import { signOut } from "next-auth/react";
 import { Button } from "./button";
 import { LogOut } from "lucide-react";
 import { useState } from "react";
-import { Spinner } from "../LoadingSpinner";
+import { Spinner } from "./loading-spinner";
 
 export default function SignOutButton() {
   const [loading, setLoading] = useState(false);

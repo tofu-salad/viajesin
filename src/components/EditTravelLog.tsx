@@ -17,16 +17,18 @@ import {
 } from "@/models/TravelLog.model";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, Edit } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Textarea } from "./ui/textarea";
-import { Spinner } from "./LoadingSpinner";
 import { useRouter } from "next/navigation";
 import format from "date-fns/format";
+import { Spinner } from "./ui/loading-spinner";
+import TravelLogContext from "@/context/TravelLog/TravelLogContext";
 
 export default function EditTravelLog({ log }: { log: TravelLogWithId }) {
   const [formError, setFormError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { dispatch } = useContext(TravelLogContext);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
 
@@ -85,8 +87,12 @@ export default function EditTravelLog({ log }: { log: TravelLogWithId }) {
   return (
     <Dialog open={isOpen} onOpenChange={handleIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="p-0">
-          <Edit />
+        <Button
+          variant="ghost"
+          className="p-0"
+          onClick={() => dispatch({ type: "SET_SIDEBAR_VISIBLE", data: false })}
+        >
+          <Edit className="text-purple-200"/>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

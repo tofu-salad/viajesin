@@ -16,7 +16,7 @@ export default async function Layout({
   return (
     <TravelLogProvider>
       {session ? <NavMenu session={session} /> : null}
-      <div className="w-screen h-screen">{children}</div>
+      <main>{children}</main>
     </TravelLogProvider>
   );
 }

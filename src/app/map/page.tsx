@@ -1,5 +1,5 @@
-import LoadingSpinner from "@/components/LoadingSpinner";
 import MapMenu from "@/components/MapMenu";
+import LoadingSpinner from "@/components/ui/loading-spinner";
 import { db } from "@/db/db";
 import { getCurrentUser } from "@/lib/session";
 import dynamic from "next/dynamic";
