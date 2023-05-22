@@ -13,10 +13,12 @@ import Link from "next/link";
 import { useContext } from "react";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
 import { UserSession } from "@/types/next-auth";
+import { useRouter } from "next/navigation";
 
 export function NavMenu({ session }: { session: UserSession }) {
   const { state } = useContext(TravelLogContext);
   const hidden = state.sideBarVisible === true ? "hidden" : "";
+  const router = useRouter();
   return (
     <div className={`fixed top-2 right-2 z-[998] ${hidden} md:block`}>
       <DropdownMenu>
@@ -39,7 +41,8 @@ export function NavMenu({ session }: { session: UserSession }) {
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="cursor-pointer"
-            onClick={() => signOut()}
+            onClick={() => {signOut()
+            router.push("/")}}
           >
             <LogOut className="mr-2 h-4 w-4" />
             <span>Cerrar Sesión</span>
