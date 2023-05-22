@@ -1,20 +1,23 @@
+import { Metadata } from "next";
 import "./globals.css";
+import { Quicksand } from "next/font/google";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Viajesin",
 };
-
+const quicksand = Quicksand({
+  subsets: ["latin"],
+  weight: "600",
+  display: "swap",
+});
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
-      <head />
-      <body className="">
-        <main className="">{children}</main>
-      </body>
+    <html className={quicksand.className} lang="es">
+      <body className="">{children}</body>
     </html>
   );
 }

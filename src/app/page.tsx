@@ -1,5 +1,6 @@
 import SignIn, { SignInProps } from "@/components/Login";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { desc, eq } from "drizzle-orm";
 import {
   Card,
   CardContent,
@@ -88,19 +89,25 @@ function LoggedIn({ session }: { session: UserSession }) {
 function Landing({ providers }: SignInProps) {
   return (
     <div className="text-center">
-      <div className="flex m-2 blur-sm justify-items-center">
+      <div className="flex blur-sm justify-items-center">
         <AspectRatio ratio={16 / 9}>
           <Image
             width={1024}
             height={683}
             src="/img/viajes.jpg"
             alt="Image"
-            className="rounded-md object-cover"
+            className="h-full w-full rounded-md object-cover"
           />
         </AspectRatio>
       </div>
-      <Card className="mt-5 h-12">
-        <h1>Viajesin</h1>
+      <Card className="h-full flex justify-center">
+        <Image
+          width={200}
+          height={123}
+          src="/img/viajesinlogo.png"
+          alt="Image"
+          className=""
+        />
       </Card>
       <Card className="h-5">
         <h2>Registra tus aventuras y comparte tus viajes</h2>
