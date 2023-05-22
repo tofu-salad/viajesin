@@ -16,10 +16,10 @@ import { db } from "@/db/db";
 import { travelLogs } from "@/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { LastVisitedPlaces } from "@/components/LastVisitedPlaces";
-import { UserSession } from "../../types/next-auth";
 import SignOutButton from "@/components/ui/signout-button";
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { UserSession } from "@/types/next-auth";
 
 export default async function Home() {
   const providers = await getProviders();
