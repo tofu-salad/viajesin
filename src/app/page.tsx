@@ -35,12 +35,11 @@ export default async function Home() {
     : [];
 
   return (
-    <div className=" h-full bg-gradient-to-tr from-slate-100 to-orange-100">
-      {/*flex items-center justify-center*/}
+    <div className=" h-full">
       {!session ? (
         <Landing providers={providers} />
       ) : (
-        <div className="grid grid-rows-2 md:grid-cols-2 md:grid-rows-1 gap-2 pt-4">
+        <div className="flex flex-col justify-center items-center gap-2 pt-4">
           <LoggedIn session={session} />
           <LastVisitedPlaces logs={lastVisitedPlaces} />
         </div>
@@ -56,7 +55,7 @@ function LoggedIn({ session }: { session: UserSession }) {
     .join(" ");
 
   return (
-    <Card className="w-[350px] md:w-full md:h-[375px] flex justify-between flex-col">
+    <Card className="w-[350px] md:w-full md:h-[375px]">
       <CardHeader className="flex items-center">
         <CardTitle className="text-center">{session.name}</CardTitle>
         <Avatar className="w-20 h-20 md:w-40 md:h-40">
@@ -86,34 +85,32 @@ function LoggedIn({ session }: { session: UserSession }) {
 }
 function Landing({ providers }: SignInProps) {
   return (
-    <div className="text-center">
-      <div className="flex blur-sm justify-items-center">
+    <div className=" text-center">
+      <div className="flex justify-items-center">
         <AspectRatio ratio={16 / 9}>
           <Image
-            width={1024}
-            height={683}
-            src="/img/viajes.jpg"
+            width={1440}
+            height={960}
+            src="/img/viajesin.webp"
             alt="Image"
             className="h-full w-full rounded-md object-cover"
           />
         </AspectRatio>
       </div>
-      <Card className="h-full flex justify-center">
-        <Image
-          width={200}
-          height={123}
-          src="/img/viajesinlogo.png"
-          alt="Image"
-          className=""
-        />
-      </Card>
-      <Card className="h-5">
-        <h2>Registra tus aventuras y comparte tus viajes</h2>
-      </Card>
-      <Card className="h-80 ">
+      <div className="p-6 scroll-m-20 border-b pb-2 text-2xl">
+        <h2 className=" font-semibold tracking-tight transition-colors first:mt-0 bg-gradient-to-tr from-red-200 to-indigo-500 bg-clip-text text-transparent">
+          ¡Creá tu diario de viaje!
+        </h2>
+        <p>Registrá y reviví tus aventuras con nuestra aplicación de viajes</p>
+      </div>
+
+      <Card className="h-full p-6 m-2">
         <h3>¡Regístrate ahora!</h3>
-        <h3>Clic en el siquiente botón para iniciar seción</h3>
+        <h3>Clic en el siquiente botón para iniciar sesión</h3>
         <SignIn providers={providers} />
+      </Card>
+      <Card className="absolute md:static inset-x-0 bottom-0 h-16 text-right items-center">
+        redes -github
       </Card>
     </div>
   );

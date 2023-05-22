@@ -16,7 +16,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html className={quicksand.className} lang="es">
+    <html className={`${quicksand.className} dark`} lang="es">
       <body className="">{children}</body>
     </html>
   );
