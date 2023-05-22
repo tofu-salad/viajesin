@@ -17,10 +17,11 @@ import { db } from "@/db/db";
 import { travelLogs } from "@/db/schema";
 
 import { LastVisitedPlaces } from "@/components/LastVisitedPlaces";
-<<<<<<< HEAD
 
-=======
->>>>>>> fcd9b5e (fix import)
+
+
+
+
 import SignOutButton from "@/components/ui/signout-button";
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
