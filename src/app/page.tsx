@@ -15,13 +15,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { MapIcon } from "lucide-react";
 import { db } from "@/db/db";
 import { travelLogs } from "@/db/schema";
-
 import { LastVisitedPlaces } from "@/components/LastVisitedPlaces";
-
-
-
-
-
 import SignOutButton from "@/components/ui/signout-button";
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
