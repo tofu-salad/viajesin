@@ -1,5 +1,9 @@
 import "./globals.css";
 
+export const metadata = {
+  title: "Viajesin",
+};
+
 export default async function RootLayout({
   children,
 }: {

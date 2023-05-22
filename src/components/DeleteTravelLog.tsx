@@ -27,7 +27,7 @@ export default function DeleteTravelLog({ log }: { log: TravelLogWithId }) {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const response = await fetch(`/api/travellogs?id=${log.id}`, {
+      const response = await fetch(`/api/travel_logs?id=${log.id}`, {
         method: "DELETE",
         headers: { "content-type": "application/json" },
       });

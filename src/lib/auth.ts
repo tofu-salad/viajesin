@@ -1,15 +1,15 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import { env } from "@/env.mjs";
-import { DrizzleAdapterPg } from "@/db/drizzle-adapter";
 import { db } from "@/db/db";
+import { PgAdapter } from "@/db/adapter";
 
 export const authOptions: NextAuthOptions = {
-  adapter: DrizzleAdapterPg(db),
+  adapter: PgAdapter(db),
   secret: env.NEXTAUTH_SECRET,
   providers: [
     DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
+      clientId: env.NEXT_PUBLIC_DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
   ],

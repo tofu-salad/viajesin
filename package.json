@@ -1,15 +1,12 @@
 {
-  "name": "log_viajes",
+  "name": "Travel Logs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "prismaDev": "dotenv -e .env.local prisma migrate dev",
-    "prismaStudio": "dotenv -e .env.local prisma studio",
-    "podman": "podman build -t mysql-container . && podman run -d -p 3306:3306 mysql-container"
+    "lint": "next lint"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.1.0",
@@ -23,19 +20,18 @@
     "@radix-ui/react-navigation-menu": "^1.1.2",
     "@radix-ui/react-scroll-area": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.1",
-    "@tanstack/react-query": "^4.29.7",
+    "@t3-oss/env-nextjs": "^0.3.1",
     "autoprefixer": "^10.4.14",
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
-    "drizzle-orm": "^0.25.4",
+    "drizzle-orm": "^0.26.0",
     "eslint": "^8.40.0",
     "eslint-config-next": "13.4.2",
     "leaflet": "^1.9.3",
     "lucide-react": "^0.216.0",
     "next": "^13.4.2",
     "next-auth": "^4.22.1",
-    "pg": "^8.11.0",
     "postgres": "^3.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -45,16 +41,12 @@
     "tailwindcss": "^3.3.2",
     "tailwindcss-animate": "^1.0.5",
     "typescript": "5.0.4",
-    "uuid": "^9.0.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.3",
     "@types/node": "20.1.5",
-    "@types/pg": "^8.6.6",
     "@types/react": "18.2.6",
-    "@types/uuid": "^9.0.1",
-    "drizzle-kit": "^0.17.6",
-    "typescript": "5.0.4"
+    "drizzle-kit": "^0.18.0"
   }
 }
