@@ -16,8 +16,10 @@ import { db } from "@/db/db";
 import { travelLogs } from "@/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { LastVisitedPlaces } from "@/components/LastVisitedPlaces";
+import { UserSession } from "../../types/next-auth";
 import SignOutButton from "@/components/ui/signout-button";
-import { UserSession } from "@/types/next-auth";
+import Image from "next/image";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export default async function Home() {
   const providers = await getProviders();
@@ -33,7 +35,8 @@ export default async function Home() {
     : [];
 
   return (
-    <div>
+    <div className=" h-full bg-gradient-to-tr from-slate-100 to-orange-100">
+      {/*flex items-center justify-center*/}
       {!session ? (
         <Landing providers={providers} />
       ) : (
@@ -81,11 +84,31 @@ function LoggedIn({ session }: { session: UserSession }) {
     </Card>
   );
 }
-
 function Landing({ providers }: SignInProps) {
   return (
-    <div>
-      <SignIn providers={providers} />
+    <div className="text-center">
+      <div className="flex m-2 blur-sm justify-items-center">
+        <AspectRatio ratio={16 / 9}>
+          <Image
+            width={1024}
+            height={683}
+            src="/img/viajes.jpg"
+            alt="Image"
+            className="rounded-md object-cover"
+          />
+        </AspectRatio>
+      </div>
+      <Card className="mt-5 h-12">
+        <h1>Viajesin</h1>
+      </Card>
+      <Card className="h-5">
+        <h2>Registra tus aventuras y comparte tus viajes</h2>
+      </Card>
+      <Card className="h-80 ">
+        <h3>¡Regístrate ahora!</h3>
+        <h3>Clic en el siquiente botón para iniciar seción</h3>
+        <SignIn providers={providers} />
+      </Card>
     </div>
   );
 }
