@@ -81,8 +81,8 @@ function LoggedIn({ session }: { session: UserSession }) {
 }
 function Landing({ providers }: SignInProps) {
   return (
-    <div className="text-center md:grid md:grid-cols-4 h-full relative">
-      <section className="flex justify-items-center md:col-span-3">
+    <div className="text-center h-full relative  md:grid md:grid-cols-12">
+      <section className="flex justify-items-center md:col-span-8 ">
         <Image
           width={1440}
           height={960}
@@ -92,7 +92,7 @@ function Landing({ providers }: SignInProps) {
         />
       </section>
 
-      <section className="md:col-span-1">
+      <section className="md:col-span-4">
         <div className="flex flex-col items-center">
           <div className="p-6 scroll-m-20 border-b pb-2 text-2xl">
             <h2 className=" font-semibold tracking-tight transition-colors first:mt-0 bg-gradient-to-tr from-red-200 to-indigo-500 bg-clip-text text-transparent">
