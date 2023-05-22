@@ -1,10 +1,8 @@
 import { db } from "@/db/db";
-import { travelLogs } from "@/db/schema";
 import {
   EditFormDataWithId,
   TravelLogWithUserId,
 } from "@/models/TravelLog.model";
-import { eq } from "drizzle-orm";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -17,13 +15,10 @@ export default async function handler(
     if (req.method === "GET") {
       const { id } = req.query;
       if (id && !Array.isArray(id)) {
-        const logs = await db
-          .select()
-          .from(travelLogs)
-          .where(eq(travelLogs.id, id));
+        const logs = await db.travelLogs.findMany({ where: { id } });
         res.status(200).json(logs);
       } else {
-        const logs = await db.select().from(travelLogs);
+        const logs = await db.travelLogs.findMany({});
         res.status(200).json(logs);
       }
     } else if (req.method === "POST") {
@@ -37,10 +32,8 @@ export default async function handler(
         longitude,
         userId,
       } = await TravelLogWithUserId.parseAsync(req.body);
-      const createLog = await db
-        .insert(travelLogs)
-        .values({
-          id: crypto.randomUUID(),
+      const createLog = await db.travelLogs.create({
+        data: {
           image,
           title,
           rating,
@@ -49,40 +42,32 @@ export default async function handler(
           latitude,
           longitude,
           userId,
-        })
-        .returning();
+        },
+      });
       res.status(200).json(createLog);
     } else if (req.method === "PUT") {
       const { id, image, title, rating, visitDate, description } =
         await EditFormDataWithId.parseAsync(req.body);
-      const updateLog = db
-        .update(travelLogs)
-        .set({
+
+      const updateLog = db.travelLogs.update({
+        data: {
           image,
           title,
           rating,
           visitDate,
           description,
-        })
-        .where(eq(travelLogs.id, id))
-        .returning({ id: travelLogs.id })
-        .then((res) => res[0]);
-
+        },
+        where: { id },
+      });
       res
         .status(200)
         .json({ message: `travel-log ${updateLog} edited correctly` });
     } else if (req.method === "DELETE") {
       const { id } = req.query;
       if (id && !Array.isArray(id)) {
-        const deletedLog = await db
-          .delete(travelLogs)
-          .where(eq(travelLogs.id, id))
-          .returning({ deletedLog: travelLogs.id });
+        const deletedLog = await db.travelLogs.delete({ where: { id } });
 
         res.status(200).json({ message: `Log deleted ${deletedLog}` });
-      } else {
-        const logs = await db.select().from(travelLogs);
-        res.status(200).json(logs);
       }
     } else {
       res.status(405).json({ message: "Not supported" });

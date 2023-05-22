@@ -17,7 +17,7 @@ export default async function RootLayout({
 }) {
   return (
     <html className={`${quicksand.className} dark`} lang="es">
-      <body className="">{children}</body>
+      <body>{children}</body>
     </html>
   );
 }

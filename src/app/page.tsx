@@ -1,6 +1,5 @@
 import SignIn, { SignInProps } from "@/components/Login";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { desc, eq } from "drizzle-orm";
 import {
   Card,
   CardContent,
@@ -12,13 +11,11 @@ import { getCurrentUser } from "@/lib/session";
 import { getProviders } from "next-auth/react";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
-import { MapIcon } from "lucide-react";
+import { Github, MapIcon } from "lucide-react";
 import { db } from "@/db/db";
-import { travelLogs } from "@/db/schema";
 import { LastVisitedPlaces } from "@/components/LastVisitedPlaces";
 import SignOutButton from "@/components/ui/signout-button";
 import Image from "next/image";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { UserSession } from "@/types/next-auth";
 
 export default async function Home() {
@@ -26,16 +23,15 @@ export default async function Home() {
   const session = await getCurrentUser();
 
   const lastVisitedPlaces = session
-    ? await db
-        .select()
-        .from(travelLogs)
-        .where(eq(travelLogs.userId, session.id))
-        .limit(5)
-        .orderBy(desc(travelLogs.visitDate))
+    ? await db.travelLogs.findMany({
+        take: 5,
+        where: { id: session.id },
+        orderBy: { visitDate: "asc" },
+      })
     : [];
 
   return (
-    <div className=" h-full">
+    <main className="h-screen">
       {!session ? (
         <Landing providers={providers} />
       ) : (
@@ -44,7 +40,7 @@ export default async function Home() {
           <LastVisitedPlaces logs={lastVisitedPlaces} />
         </div>
       )}
-    </div>
+    </main>
   );
 }
 
@@ -85,33 +81,45 @@ function LoggedIn({ session }: { session: UserSession }) {
 }
 function Landing({ providers }: SignInProps) {
   return (
-    <div className=" text-center">
-      <div className="flex justify-items-center">
-        <AspectRatio ratio={16 / 9}>
-          <Image
-            width={1440}
-            height={960}
-            src="/img/viajesin.webp"
-            alt="Image"
-            className="h-full w-full rounded-md object-cover"
-          />
-        </AspectRatio>
-      </div>
-      <div className="p-6 scroll-m-20 border-b pb-2 text-2xl">
-        <h2 className=" font-semibold tracking-tight transition-colors first:mt-0 bg-gradient-to-tr from-red-200 to-indigo-500 bg-clip-text text-transparent">
-          ¡Creá tu diario de viaje!
-        </h2>
-        <p>Registrá y reviví tus aventuras con nuestra aplicación de viajes</p>
-      </div>
+    <div className="text-center md:grid md:grid-cols-4 h-full relative">
+      <section className="flex justify-items-center md:col-span-3">
+        <Image
+          width={1440}
+          height={960}
+          src="/img/viajesin.webp"
+          alt="Image"
+          className="h-36 md:h-screen object-cover"
+        />
+      </section>
 
-      <Card className="h-full p-6 m-2">
-        <h3>¡Regístrate ahora!</h3>
-        <h3>Clic en el siquiente botón para iniciar sesión</h3>
-        <SignIn providers={providers} />
-      </Card>
-      <Card className="absolute md:static inset-x-0 bottom-0 h-16 text-right items-center">
-        redes -github
-      </Card>
+      <section className="md:col-span-1">
+        <div className="flex flex-col items-center">
+          <div className="p-6 scroll-m-20 border-b pb-2 text-2xl">
+            <h2 className=" font-semibold tracking-tight transition-colors first:mt-0 bg-gradient-to-tr from-red-200 to-indigo-500 bg-clip-text text-transparent">
+              ¡Creá tu diario de viaje!
+            </h2>
+            <p>
+              Registrá y reviví tus aventuras con nuestra aplicación de viajes
+            </p>
+          </div>
+
+          <section className="w-full p-2">
+            <Card className="p-6">
+              <h3>¡Regístrate ahora!</h3>
+              <div>
+                <h3>Clic en el siquiente botón para iniciar sesión</h3>
+                <SignIn providers={providers} />
+              </div>
+            </Card>
+          </section>
+        </div>
+      </section>
+
+      <footer className="absolute bottom-0 p-4 w-full flex justify-end">
+        <Link href="https://github.com/zeroCalSoda/viajesin" target="_blank">
+          <Github className="hover:text-indigo-500/80" />
+        </Link>
+      </footer>
     </div>
   );
 }
