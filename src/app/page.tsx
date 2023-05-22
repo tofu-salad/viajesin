@@ -1,4 +1,3 @@
-import SignIn, { SignInProps } from "@/components/Login";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
@@ -17,6 +16,7 @@ import { LastVisitedPlaces } from "@/components/LastVisitedPlaces";
 import SignOutButton from "@/components/ui/signout-button";
 import Image from "next/image";
 import { UserSession } from "@/types/next-auth";
+import SignIn, { SignInProps } from "@/components/ui/login-buttons";
 
 export default async function Home() {
   const providers = await getProviders();
@@ -89,6 +89,9 @@ function Landing({ providers }: SignInProps) {
           src="/img/viajesin.webp"
           alt="Image"
           className="h-36 md:h-screen object-cover"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACCAYAAACddGYaAAAAI0lEQVQIW2N89P/0/0cMJgyXGBgYGP8Xzv/PkGrC8OjHOwYApv0MBT22d94AAAAASUVORK5CYII="
+          loading="eager"
         />
       </section>
 
@@ -116,7 +119,11 @@ function Landing({ providers }: SignInProps) {
       </section>
 
       <footer className="absolute bottom-0 p-4 w-full flex justify-end">
-        <Link href="https://github.com/zeroCalSoda/viajesin" target="_blank">
+        <Link
+          href="https://github.com/zeroCalSoda/viajesin"
+          target="_blank"
+          aria-label="Repositorio de Github"
+        >
           <Github className="hover:text-indigo-500/80" />
         </Link>
       </footer>
