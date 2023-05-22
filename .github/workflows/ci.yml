@@ -14,20 +14,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install pnpm
-      - uses: pnpm/action-setup@v2
-
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Install Dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Typecheck
-        run: pnpm typecheck
+        run: npm run typecheck
 
       - name: Lint
-        run: pnpm lint
+        run: npm run lint
 
       - name: Print Environment Variable
         run: echo $MY_ENV_VAR
