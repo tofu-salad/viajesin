@@ -25,7 +25,7 @@ export default async function Home() {
   const lastVisitedPlaces = session
     ? await db.travelLogs.findMany({
         take: 5,
-        where: { id: session.id },
+        where: { userId: session.id },
         orderBy: { visitDate: "asc" },
       })
     : [];
