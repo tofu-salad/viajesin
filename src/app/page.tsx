@@ -35,7 +35,7 @@ export default async function Home() {
       {!session ? (
         <Landing providers={providers} />
       ) : (
-        <div className="flex flex-col justify-center items-center gap-2 pt-4">
+        <div className="flex flex-col md:flex-row h-full justify-center items-center gap-2 pt-4">
           <LoggedIn session={session} />
           <LastVisitedPlaces logs={lastVisitedPlaces} />
         </div>
@@ -51,7 +51,7 @@ function LoggedIn({ session }: { session: UserSession }) {
     .join(" ");
 
   return (
-    <Card className="w-[350px] md:w-full md:h-[375px]">
+    <Card className="w-[350px] md:h-[375px]">
       <CardHeader className="flex items-center">
         <CardTitle className="text-center">{session.name}</CardTitle>
         <Avatar className="w-20 h-20 md:w-40 md:h-40">
