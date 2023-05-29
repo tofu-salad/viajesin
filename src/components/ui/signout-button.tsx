@@ -26,7 +26,7 @@ export default function SignOutButton() {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full ">
           <LogOut className="w-4 h-4"></LogOut>
           <span className="text-xs">Cerrar sesión</span>
         </div>

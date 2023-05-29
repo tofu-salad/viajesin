@@ -81,14 +81,14 @@ function LoggedIn({ session }: { session: UserSession }) {
 }
 function Landing({ providers }: SignInProps) {
   return (
-    <div className="text-center h-full relative  md:grid md:grid-cols-12">
+    <div className="text-center h-full md:grid md:grid-cols-12">
       <section className="flex justify-items-center md:col-span-8 ">
         <Image
           width={1440}
           height={960}
           src="/img/viajesin.webp"
           alt="Image"
-          className="h-36 md:h-screen object-cover"
+          className="h-auto md:h-screen object-cover rounded-lg"
           placeholder="blur"
           blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACCAYAAACddGYaAAAAI0lEQVQIW2N89P/0/0cMJgyXGBgYGP8Xzv/PkGrC8OjHOwYApv0MBT22d94AAAAASUVORK5CYII="
           loading="eager"
@@ -101,7 +101,7 @@ function Landing({ providers }: SignInProps) {
             <h2 className=" font-semibold tracking-tight transition-colors first:mt-0 bg-gradient-to-tr from-red-200 to-indigo-500 bg-clip-text text-transparent">
               ¡Creá tu diario de viaje!
             </h2>
-            <p>
+            <p className="text-[70%]">
               Registrá y reviví tus aventuras con nuestra aplicación de viajes
             </p>
           </div>
