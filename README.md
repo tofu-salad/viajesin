@@ -1,5 +1,5 @@
 # Viajesin
-![image](https://github.com/zeroCalSoda/viajesin/assets/67925799/8b7c9ec9-f561-4bb5-9c36-1bbcbb4d148d)
+![image](https://github.com/zeroCalSoda/viajesin/assets/67925799/a7059de2-3ef4-415f-bc3a-a685a2ca7d6d)
 
 
 Web application designed to capture and preserve your exciting travel adventures! With Viajesin, you can easily and elegantly record all the details of your trips. Your travel records will be protected and only accessible to you, ensuring that your memories remain safe and private.
