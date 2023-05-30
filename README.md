@@ -1,3 +1,5 @@
+# Viajesin
+web application designed to capture and preserve your exciting travel adventures! With Viajesin, you can easily and elegantly record all the details of your trips. Your travel records will be protected and only accessible to you, ensuring that your memories remain safe and private.
 ## Dependencies
 
 - Postgres\Docker
@@ -15,9 +17,7 @@ npm install -g pnpm dotenv-cli
 3. Database migration
 
 ```
-pnpm run prismaDev
+pnpm prisma migrate dev
 ```
 
 ## To run the App: `pnpm run dev`
-
-hola 
