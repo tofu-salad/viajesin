@@ -20,7 +20,7 @@ export default function SignOutButtonNav() {
   return (
     <Button
       onClick={handleLogout}
-      className="flex items-center bg-sky-800 "
+      className="flex items-center bg-slate-900 "
     >
       {loading ? (
         <Spinner />

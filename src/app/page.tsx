@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
   CardNav,
+  CardHeaderMobile,
 } from "@/components/ui/card";
 import { getCurrentUser } from "@/lib/session";
 import { getProviders } from "next-auth/react";
@@ -38,11 +39,11 @@ export default async function Home() {
         <Landing providers={providers} />
       ) : (
         <div>
-          <CardNav className="md:hidden p-10 content-center grid grid-flow-col bg-sky-800 h-8 ">
+          <CardNav className=" flex content-center bg-slate-900 h-8 p-10">
             <img src="favicon.ico" alt="logo" />
             <Link
               className={`${buttonVariants({
-              variant: "link"})} bg-sky-800 text-l text-white`}
+              variant: "link"})} ml-auto bg-slate-900 text-l text-white`}
               href={"/map"}>
               Mapa
           </Link>
@@ -67,18 +68,42 @@ function LoggedIn({ session }: { session: UserSession }) {
   return (
       
     <Card className="w-[350px] md:h-[375px]">
+        <CardHeaderMobile className="grid grid-flow-col m-6">
+          <div className="">
+            <Avatar className=" w-20 h-20 ">
+              <AvatarImage src={session.image!} alt={session.name!} />
+              <AvatarFallback>{fallBackLetters}</AvatarFallback>
+            </Avatar>
+          </div>
+          <div className="self-center">
+            <CardTitle className="text-center ">
+              {session.name}
+            </CardTitle>          
+            <CardContent>
+              <p className="truncate text-sm text-gray-500 text-end ">
+                {session.email}
+              </p>
+            </CardContent>
+          </div>
+        </CardHeaderMobile>
+{/*
+
+
         <CardHeader className="">
-        <CardTitle className="text-end ">{session.name}</CardTitle>
-        <Avatar className="w-20 h-20 md:w-40 md:h-40 ">
-          <AvatarImage src={session.image!} alt={session.name!} />
-          <AvatarFallback>{fallBackLetters}</AvatarFallback>
-        </Avatar>
-      </CardHeader>
-      <CardContent>
-        <p className="truncate text-sm text-gray-500 text-end">
-          {session.email}
-        </p>
-      </CardContent>
+          <CardTitle className="text-end border-8 ">
+            {session.name}
+          </CardTitle>
+          <Avatar className="border-8 w-20 h-20 md:w-40 md:h-40 ">
+            <AvatarImage src={session.image!} alt={session.name!} />
+            <AvatarFallback>{fallBackLetters}</AvatarFallback>
+          </Avatar>
+          <CardContent>
+            <p className="border-8 truncate text-sm text-gray-500 text-end">
+              {session.email}
+            </p>
+          </CardContent>
+        </CardHeader>*/}
+      
       <CardFooter className="grid gap-2 grid-cols-2 hidden">
         <Link
           className={`${buttonVariants({
