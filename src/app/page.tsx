@@ -5,6 +5,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  CardNav,
+  CardHeaderMobile,
 } from "@/components/ui/card";
 import { getCurrentUser } from "@/lib/session";
 import { getProviders } from "next-auth/react";
@@ -17,6 +19,7 @@ import SignOutButton from "@/components/ui/signout-button";
 import Image from "next/image";
 import { UserSession } from "@/types/next-auth";
 import SignIn, { SignInProps } from "@/components/ui/login-buttons";
+import SignOutButtonNav from "@/components/ui/signout-buttonNav";
 
 export default async function Home() {
   const providers = await getProviders();
@@ -35,9 +38,21 @@ export default async function Home() {
       {!session ? (
         <Landing providers={providers} />
       ) : (
-        <div className="flex flex-col md:flex-row h-full justify-center items-center gap-2 pt-4">
-          <LoggedIn session={session} />
-          <LastVisitedPlaces logs={lastVisitedPlaces} />
+        <div>
+          <CardNav className=" flex content-center bg-slate-900 h-8 p-10">
+            <img src="favicon.ico" alt="logo" />
+            <Link
+              className={`${buttonVariants({
+              variant: "link"})} ml-auto bg-slate-900 text-l text-white`}
+              href={"/map"}>
+              Mapa
+          </Link>
+          <SignOutButtonNav/>
+          </CardNav>
+          <div className="flex flex-col md:flex-row h-full justify-center items-center gap-2 pt-4">
+            <LoggedIn session={session} />
+            <LastVisitedPlaces logs={lastVisitedPlaces} />
+          </div>
         </div>
       )}
     </main>
@@ -51,20 +66,45 @@ function LoggedIn({ session }: { session: UserSession }) {
     .join(" ");
 
   return (
+      
     <Card className="w-[350px] md:h-[375px]">
-      <CardHeader className="flex items-center">
-        <CardTitle className="text-center">{session.name}</CardTitle>
-        <Avatar className="w-20 h-20 md:w-40 md:h-40">
-          <AvatarImage src={session.image!} alt={session.name!} />
-          <AvatarFallback>{fallBackLetters}</AvatarFallback>
-        </Avatar>
-      </CardHeader>
-      <CardContent>
-        <p className="truncate text-sm text-gray-500 text-center">
-          {session.email}
-        </p>
-      </CardContent>
-      <CardFooter className="grid gap-2 grid-cols-2 ">
+        <CardHeaderMobile className="grid grid-flow-col m-6">
+          <div className="">
+            <Avatar className=" w-20 h-20 ">
+              <AvatarImage src={session.image!} alt={session.name!} />
+              <AvatarFallback>{fallBackLetters}</AvatarFallback>
+            </Avatar>
+          </div>
+          <div className="self-center">
+            <CardTitle className="text-center ">
+              {session.name}
+            </CardTitle>          
+            <CardContent>
+              <p className="truncate text-sm text-gray-500 text-end ">
+                {session.email}
+              </p>
+            </CardContent>
+          </div>
+        </CardHeaderMobile>
+{/*
+
+
+        <CardHeader className="">
+          <CardTitle className="text-end border-8 ">
+            {session.name}
+          </CardTitle>
+          <Avatar className="border-8 w-20 h-20 md:w-40 md:h-40 ">
+            <AvatarImage src={session.image!} alt={session.name!} />
+            <AvatarFallback>{fallBackLetters}</AvatarFallback>
+          </Avatar>
+          <CardContent>
+            <p className="border-8 truncate text-sm text-gray-500 text-end">
+              {session.email}
+            </p>
+          </CardContent>
+        </CardHeader>*/}
+      
+      <CardFooter className="grid gap-2 grid-cols-2 hidden">
         <Link
           className={`${buttonVariants({
             variant: "default",
