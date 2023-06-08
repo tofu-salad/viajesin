@@ -75,13 +75,13 @@ function LoggedIn({ session }: { session: UserSession }) {
               <AvatarFallback>{fallBackLetters}</AvatarFallback>
             </Avatar>
           </div>
-          <div className="self-center">
-            <CardTitle className="text-center ">
+          <div className="ml-5 self-center text-ellipsis overflow-hidden">
+            <CardTitle className="p-2 ">
               {session.name}
             </CardTitle>          
             <CardContent>
-              <p className="truncate text-sm text-gray-500 text-end ">
-                {session.email}
+              <p className="p-2">
+                {session.email}fdgddsfgsdgf
               </p>
             </CardContent>
           </div>
