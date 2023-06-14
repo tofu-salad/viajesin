@@ -40,14 +40,16 @@ export default async function Home() {
       ) : (
         <div>
           <CardNav className=" flex content-center bg-slate-900 h-8 p-10">
-            <img src="favicon.ico" alt="logo" />
+            <div className="h-10 w-10  bg-gray-950 flex rounded-full justify-center items-center">
+              <img src="favicon.ico" alt="logo" />
+            </div>
             <Link
               className={`${buttonVariants({
               variant: "link"})} ml-auto bg-slate-900 text-l text-white`}
               href={"/map"}>
               Mapa
-          </Link>
-          <SignOutButtonNav/>
+            </Link>
+            <SignOutButtonNav/>
           </CardNav>
           <div className="flex flex-col md:flex-row h-full justify-center items-center gap-2 pt-4">
             <LoggedIn session={session} />
@@ -75,12 +77,12 @@ function LoggedIn({ session }: { session: UserSession }) {
               <AvatarFallback>{fallBackLetters}</AvatarFallback>
             </Avatar>
           </div>
-          <div className="self-center">
-            <CardTitle className="text-center ">
+          <div className="ml-5 self-center text-ellipsis overflow-hidden">
+            <CardTitle className="p-2 ">
               {session.name}
             </CardTitle>          
             <CardContent>
-              <p className="truncate text-sm text-gray-500 text-end ">
+              <p className="p-2">
                 {session.email}
               </p>
             </CardContent>
@@ -109,8 +111,7 @@ function LoggedIn({ session }: { session: UserSession }) {
           className={`${buttonVariants({
             variant: "default",
           })} w-full text-xs flex justify-between`}
-          href={"/map"}
-        >
+          href={"/map"}>
           Mapa
           <MapIcon className="w-4 h-4" />
         </Link>
