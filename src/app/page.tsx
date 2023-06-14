@@ -45,7 +45,7 @@ export default async function Home() {
             </div>
             <Link
               className={`${buttonVariants({
-              variant: "link"})} ml-auto bg-slate-900 text-l text-white `}
+              variant: "link"})} ml-auto bg-slate-900 text-l text-white`}
               href={"/map"}>
               Mapa
             </Link>
