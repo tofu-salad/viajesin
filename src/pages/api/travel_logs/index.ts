@@ -1,4 +1,5 @@
-import { db } from "@/db/db";
+import { createTravelLog, deleteTravelLog, getAllTravelLogs, getTravelLogsById, updateTravelLog } from "@/db/queries";
+import { SelectTravelLog } from "@/db/schema";
 import {
   EditFormDataWithId,
   TravelLogWithUserId,
@@ -8,17 +9,17 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<
-    TravelLogWithUserId[] | TravelLogWithUserId | { message: string }
+    SelectTravelLog[] | TravelLogWithUserId | { message: string }
   >
 ) {
   try {
     if (req.method === "GET") {
       const { id } = req.query;
       if (id && !Array.isArray(id)) {
-        const logs = await db.travelLogs.findMany({ where: { id } });
+        const logs = await getTravelLogsById(id)
         res.status(200).json(logs);
       } else {
-        const logs = await db.travelLogs.findMany({});
+        const logs = await getAllTravelLogs()
         res.status(200).json(logs);
       }
     } else if (req.method === "POST") {
@@ -32,32 +33,29 @@ export default async function handler(
         longitude,
         userId,
       } = await TravelLogWithUserId.parseAsync(req.body);
-      const createLog = await db.travelLogs.create({
-        data: {
-          image,
-          title,
-          rating,
-          visitDate,
-          description,
-          latitude,
-          longitude,
-          userId,
-        },
+
+      await createTravelLog({
+        image,
+        title,
+        rating,
+        visitDate,
+        description,
+        latitude,
+        longitude,
+        userId,
       });
-      res.status(200).json(createLog);
+      res.status(200).json({ message: `Log created ${createTravelLog}` })
+
     } else if (req.method === "PUT") {
       const { id, image, title, rating, visitDate, description } =
         await EditFormDataWithId.parseAsync(req.body);
 
-      const updateLog = db.travelLogs.update({
-        data: {
-          image,
-          title,
-          rating,
-          visitDate,
-          description,
-        },
-        where: { id },
+      const updateLog = updateTravelLog(id, {
+        image,
+        title,
+        rating,
+        visitDate,
+        description,
       });
       res
         .status(200)
@@ -65,7 +63,7 @@ export default async function handler(
     } else if (req.method === "DELETE") {
       const { id } = req.query;
       if (id && !Array.isArray(id)) {
-        const deletedLog = await db.travelLogs.delete({ where: { id } });
+        const deletedLog = deleteTravelLog(id)
 
         res.status(200).json({ message: `Log deleted ${deletedLog}` });
       }

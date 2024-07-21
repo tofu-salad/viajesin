@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Viajesin",
   description: "Aplicación Web para tú diario de viajes.",
 };
- const quicksand = Quicksand({
+const quicksand = Quicksand({
   subsets: ["latin"],
   weight: "600",
   display: "swap",

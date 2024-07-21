@@ -1,6 +1,6 @@
 import MapMenu from "@/components/MapMenu";
 import LoadingSpinner from "@/components/ui/loading-spinner";
-import { db } from "@/db/db";
+import { getTravelLogsById } from "@/db/queries";
 import { getCurrentUser } from "@/lib/session";
 import dynamic from "next/dynamic";
 const Map = dynamic(() => import("@/components/Map"), {
@@ -10,7 +10,7 @@ const Map = dynamic(() => import("@/components/Map"), {
 
 export default async function Home() {
   const user = await getCurrentUser();
-  const logs = await db.travelLogs.findMany({ where: { userId: user?.id } });
+  const logs = user ? await getTravelLogsById(user.id) : []
 
   const parsedLogs = logs.map((log) => ({ ...log }));
   const real = JSON.parse(JSON.stringify(parsedLogs));

@@ -1,0 +1,1 @@
+ALTER TABLE `travel_logs` RENAME COLUMN `timestamp` TO `created_at`;

@@ -5,10 +5,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Card, CardHeader, CardTitle } from "./ui/card";
-import { TravelLogWithId } from "@/models/TravelLog.model";
 import { ScrollArea } from "./ui/scroll-area";
+import { SelectTravelLog } from "@/db/schema";
 
-export function LastVisitedPlaces({ logs }: { logs: TravelLogWithId[] }) {
+export function LastVisitedPlaces({ logs }: { logs: SelectTravelLog[] }) {
   return (
     <Card className="w-[350px] md:w-[400px] h-[300px] md:h-[375px]">
       <CardHeader className="pt-4 pb-0">

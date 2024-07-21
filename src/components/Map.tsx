@@ -9,16 +9,17 @@ import { Star } from "lucide-react";
 import { ScrollArea } from "./ui/scroll-area";
 import { ClickIcon, DefaultIcon } from "./Map/map-icons";
 import { PopUpActions } from "./Map/PopUpActions";
+import { SelectTravelLog } from "@/db/schema";
 
 type TravelLogMapProps = {
-  logs: TravelLogWithId[];
+  logs: SelectTravelLog[];
 };
 L.Map.prototype.options.attributionControl = false;
 L.Map.prototype.options.zoomControl = false;
 
 type InitMapProps = {
   onMapClick: (event: L.LeafletMouseEvent) => void;
-  logs: TravelLogWithId[];
+  logs: SelectTravelLog[];
 };
 
 const InitMap = ({ logs, onMapClick }: InitMapProps) => {
@@ -52,6 +53,10 @@ export default function Map({ logs }: TravelLogMapProps) {
         type: "SET_CURRENT_MARKER_LOCATION",
         data: e.latlng,
       });
+      dispatch({
+        type: "SET_SIDEBAR_VISIBLE",
+        data: true      
+})
     },
     [dispatch]
   );
