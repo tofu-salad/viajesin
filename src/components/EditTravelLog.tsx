@@ -21,7 +21,7 @@ import { useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Textarea } from "./ui/textarea";
 import { useRouter } from "next/navigation";
-import format from "date-fns/format";
+import { format } from "date-fns/format";
 import { Spinner } from "./ui/loading-spinner";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
 
@@ -92,7 +92,7 @@ export default function EditTravelLog({ log }: { log: TravelLogWithId }) {
           className="p-0"
           onClick={() => dispatch({ type: "SET_SIDEBAR_VISIBLE", data: false })}
         >
-          <Edit className="text-purple-200"/>
+          <Edit className="text-purple-200" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

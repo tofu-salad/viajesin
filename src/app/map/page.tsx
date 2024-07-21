@@ -18,7 +18,7 @@ export default async function Home() {
     return <div>Que haces aca perri no estas logeado</div>;
   }
   return (
-    <div>
+    <div className="min-h-screen">
       <MapMenu />
       <Map logs={real} />
     </div>

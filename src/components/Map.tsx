@@ -9,17 +9,16 @@ import { Star } from "lucide-react";
 import { ScrollArea } from "./ui/scroll-area";
 import { ClickIcon, DefaultIcon } from "./Map/map-icons";
 import { PopUpActions } from "./Map/PopUpActions";
-import { SelectTravelLog } from "@/db/schema";
 
 type TravelLogMapProps = {
-  logs: SelectTravelLog[];
+  logs: TravelLogWithId[];
 };
 L.Map.prototype.options.attributionControl = false;
 L.Map.prototype.options.zoomControl = false;
 
 type InitMapProps = {
   onMapClick: (event: L.LeafletMouseEvent) => void;
-  logs: SelectTravelLog[];
+  logs: TravelLogWithId[];
 };
 
 const InitMap = ({ logs, onMapClick }: InitMapProps) => {
@@ -55,14 +54,14 @@ export default function Map({ logs }: TravelLogMapProps) {
       });
       dispatch({
         type: "SET_SIDEBAR_VISIBLE",
-        data: true      
-})
+        data: true
+      })
     },
     [dispatch]
   );
   return (
     <MapContainer
-      className="z-0 w-screen h-screen"
+      className="z-0 h-screen"
       style={{ background: "#171717" }}
       maxBounds={[
         [-90, -180],
@@ -93,7 +92,7 @@ export default function Map({ logs }: TravelLogMapProps) {
             <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 bg-gradient-to-tr from-red-200 to-indigo-500 bg-clip-text text-transparent">
               {log.title}
             </h2>
-            <div className="text-primary text-sm text-muted-foreground flex items-center justify-between p-2 gap-1">
+            <div className="text-primary text-sm flex items-center justify-between p-2 gap-1">
               <span>
                 {new Date(log.visitDate.toString()).toLocaleDateString()}
               </span>

@@ -29,23 +29,27 @@ export default function MapMenu() {
     });
   };
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="flex items-center justify-center">
       <Button
         ref={escKeyRef}
         onClick={handleMenuVisibility}
         variant="secondary"
         className="z-[999] flex items-center justify-center rounded-3xl fixed md:right-2 bottom-2 "
       >
-        <span className="mr-1 text-lg">agregar</span>
+        {state.sideBarVisible ?
+
+          <span className="pr-1 text-lg">cerrar</span>
+          :
+          <span className="pr-1 text-lg">agregar</span>
+        }
         <ChevronLeft
-          className={`relative top-[1px] ml-1 h-4 w-4 transition duration-200 ${
-            state.sideBarVisible ? "rotate-90" : ""
-          }`}
+          className={`relative top-[1px] left-1 h-4 w-4 transition duration-200 ${state.sideBarVisible ? "rotate-90" : ""
+            }`}
           aria-hidden="true"
         />
       </Button>
       {state.sideBarVisible && (
-        <Card className="fixed z-[998] bottom-14 md:right-2 max-h-[]">
+        <Card className="fixed z-[998] bottom-14 md:right-2">
           <TravelLogForm />
         </Card>
       )}
