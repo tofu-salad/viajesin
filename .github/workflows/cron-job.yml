@@ -11,9 +11,9 @@ jobs:
       - name: Make POST request
         env:
           AUTH_URL: ${{ secrets.AUTH_URL }}
-          API_KEY: ${{ secrets.API_KEY }}
+          CRON_API_KEY: ${{ secrets.CRON_API_KEY }}
         run: |
-          curl -X POST $ENDPOINT_URL \
+          curl -X POST $AUTH_URL \
           -H "Content-Type: application/json" \
-          -H "Authorization: Bearer $API_KEY" \
+          -H "Authorization: Bearer $CRON_API_KEY" \
           -d '{"action": "deleteGuestUser"}'
