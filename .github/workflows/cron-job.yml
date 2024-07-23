@@ -1,6 +1,8 @@
 name: Cron Job
 
-on: [push, pull_request]
+on:
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   cron-job:
@@ -8,10 +10,9 @@ jobs:
     steps:
       - name: Make POST request
         env:
-          ENDPOINT: ${{ secrets.ENDPOINT }}
-          API_KEY: ${{ secrets.API_KEY }}
+          CRON_API_KEY: ${{ secrets.CRON_API_KEY }}
         run: |
           curl -X POST https://viajesin.vercel.app/api/cron \
           -H "Content-Type: application/json" \
-          -H "Authorization: Bearer $API_KEY" \
+          -H "Authorization: Bearer $CRON_API_KEY" \
           -d '{"action": "deleteGuestUser"}'
