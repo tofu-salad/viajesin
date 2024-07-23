@@ -89,6 +89,8 @@ const CardNav = React.forwardRef<
     {...props}
   />
 ));
+CardNav.displayName = "CardNav";
+
 CardFooter.displayName = "CardFooter";
 
 const CardHeaderMobile = React.forwardRef<
@@ -97,6 +99,9 @@ const CardHeaderMobile = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div ref={ref} className={cn("block", className)} {...props} />
 ));
+
+CardHeaderMobile.displayName = "CardDisplayHeaderMobile";
+
 CardHeader.displayName = "CardHeaderMobile";
 
 export {
