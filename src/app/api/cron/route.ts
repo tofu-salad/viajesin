@@ -3,7 +3,7 @@ import { deleteGuestUser } from "@/db/queries";
 export async function POST(request: Request) {
   try {
     const apiKey = request.headers.get("Authorization")?.split("Bearer ")[1];
-    if (apiKey !== process.env.API_KEY) {
+    if (apiKey !== process.env.CRON_API_KEY) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
