@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { loginGuestUser } from "../_actions/guest-login-action";
+import { Button } from "@/ui/button";
+import { UserIcon } from "lucide-react";
 
 export default function SignIn() {
   return (
@@ -10,10 +13,15 @@ export default function SignIn() {
         <span>Discord</span>
         <DiscordIcon />
       </Link>
+      <form action={loginGuestUser}>
+        <Button className="text-center flex w-48 px-8 py-2 rounded items-center justify-between">
+          <span>Invitado</span>
+          <UserIcon />
+        </Button>
+      </form>
     </>
   );
 }
-
 function DiscordIcon() {
   return (
     <svg

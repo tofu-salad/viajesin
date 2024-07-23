@@ -11,7 +11,7 @@ import { db } from ".";
 import { User } from "lucia";
 
 export async function deleteUserById(id: SelectUser["id"]) {
-  return db.delete(userTable).where(eq(userTable.id, id));
+  return db.delete(userTable).where(eq(userTable.id, id)).returning();
 }
 
 export async function getTravelLogsById(
@@ -26,10 +26,12 @@ export async function getTravelLogsById(
 export async function getLastFiveVisitedPlaces(
   userSession: User | null,
 ): Promise<Array<SelectTravelLog>> {
+  if (!userSession) return [];
   return (
     db
       .select()
       .from(travelLogsTable)
+      .where(eq(travelLogsTable.id, userSession.id))
       .limit(5)
       .orderBy(desc(travelLogsTable.visitDate)) || []
   );
@@ -52,6 +54,13 @@ export async function updateTravelLog(
 
 export async function deleteTravelLog(id: SelectTravelLog["id"]) {
   await db.delete(travelLogsTable).where(eq(travelLogsTable.id, id));
+}
+export async function getUserById(id: SelectUser["id"]): Promise<SelectUser> {
+  return db
+    .select()
+    .from(userTable)
+    .where(eq(userTable.id, id))
+    .then((res) => res[0]);
 }
 
 export async function getUserByDiscordId(

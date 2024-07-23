@@ -40,7 +40,7 @@ export function LastVisitedPlaces({ logs }: { logs: SelectTravelLog[] }) {
             ))}
           </Accordion>
         ) : (
-          <p className="text-sm text-muted-foreground px-2">
+          <p className="text-sm text-muted-foreground px-2 text-center">
             No has visitado ningún lugar aún…
           </p>
         )}
