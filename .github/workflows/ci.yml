@@ -3,35 +3,32 @@ name: CI
 on: [push, pull_request]
 
 env:
-  DATABASE_URL: "https://fake.com"
+  TURSO_URL: "https://fake.com"
+  TURSO_TOKEN: fake
   NEXT_PUBLIC_DISCORD_CLIENT_ID: "fake"
   DISCORD_CLIENT_SECRET: "fake"
-  NEXTAUTH_URL: "https://fake.com"
-  NEXTAUTH_SECRET: "fake"
+  AUTH_URL: "https://fake.com"
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v4
         with:
-          version: 6.0.2
-          run_install: |
-            - recursive: true
-              args: [--frozen-lockfile, --strict-peer-dependencies]
+          node-version: 18
 
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Install Dependencies
-        run: pnpm i
+        run: npm install
 
       - name: Typecheck
-        run: pnpm typecheck
+        run: npm run typecheck
 
       - name: Lint
-        run: pnpm lint
+        run: npm run lint
 
       - name: Print Environment Variable
         run: echo $MY_ENV_VAR
