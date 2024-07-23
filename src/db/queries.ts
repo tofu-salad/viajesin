@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import {
   InsertTravelLog,
   InsertUser,
@@ -8,6 +8,11 @@ import {
   userTable,
 } from "./schema";
 import { db } from ".";
+import { User } from "lucia";
+
+export async function deleteUserById(id: SelectUser["id"]) {
+  return db.delete(userTable).where(eq(userTable.id, id));
+}
 
 export async function getTravelLogsById(
   id: SelectTravelLog["id"],
@@ -16,6 +21,18 @@ export async function getTravelLogsById(
     .select()
     .from(travelLogsTable)
     .where(eq(travelLogsTable.userId, id));
+}
+
+export async function getLastFiveVisitedPlaces(
+  userSession: User | null,
+): Promise<Array<SelectTravelLog>> {
+  return (
+    db
+      .select()
+      .from(travelLogsTable)
+      .limit(5)
+      .orderBy(desc(travelLogsTable.visitDate)) || []
+  );
 }
 
 export async function getAllTravelLogs(): Promise<Array<SelectTravelLog>> {

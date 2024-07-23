@@ -5,28 +5,36 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/ui/dropdown-menu";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { LogOut, Map } from "lucide-react";
-import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useContext } from "react";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
-import { UserSession } from "@/types/next-auth";
-import { useRouter } from "next/navigation";
+import { logout } from "@/app/_actions/logout-action";
+import { User } from "lucia";
+import { AvatarFallback } from "@/ui/avatar";
+import { fallBackLetters } from "@/lib/utils";
 
-export function NavMenu({ session }: { session: UserSession }) {
+type Props = {
+  userSession: User;
+};
+
+export function NavMenu({ userSession }: Props) {
   const { state } = useContext(TravelLogContext);
   const hidden = state.sideBarVisible === true ? "hidden" : "";
-  const router = useRouter();
+
   return (
     <div className={`fixed top-2 right-2 z-[998] ${hidden} md:block`}>
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Avatar className="cursor-pointer shadow-2xl rounded-full">
+            <AvatarFallback className="w-12 h-12 rounded-full border shadow-xl">
+              {fallBackLetters(userSession.username)}
+            </AvatarFallback>
             <AvatarImage
-              src={session.image!}
-              alt={session.name!}
+              src={userSession.avatar}
+              alt={userSession?.username}
               className="w-12 h-12 rounded-full border shadow-xl"
             />
           </Avatar>
@@ -35,14 +43,13 @@ export function NavMenu({ session }: { session: UserSession }) {
           <Link href="/">
             <DropdownMenuItem className="cursor-pointer">
               <Map className="mr-2 h-4 w-4" />
-              <span>Inicio</span>
+              <span>Cuenta</span>
             </DropdownMenuItem>
           </Link>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="cursor-pointer"
-            onClick={() => {signOut()
-            router.push("/")}}
+            onClick={async () => await logout()}
           >
             <LogOut className="mr-2 h-4 w-4" />
             <span>Cerrar Sesión</span>

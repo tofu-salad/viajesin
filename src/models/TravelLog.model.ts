@@ -4,6 +4,8 @@ const errors = {
   title: "El titulo no puede estar vacío.",
   description: "La descripción no puede estar vacía.",
   image: "El texto debe ser un enlace.",
+  latitude: "Tiene que ser un número entre -90 y 90.",
+  longitude: "Tiene que ser un número entre -180 y 180.",
 };
 export const TravelLog = z.object({
   title: z.string().trim().min(1, errors.title),
@@ -11,8 +13,14 @@ export const TravelLog = z.object({
   image: z.string().url(errors.image),
   rating: z.coerce.number().min(0).max(10).default(5),
   visitDate: z.coerce.date(),
-  latitude: z.coerce.number().min(-90).max(90),
-  longitude: z.coerce.number().min(-180).max(180),
+  latitude: z.coerce
+    .number({ invalid_type_error: errors.latitude })
+    .min(-90)
+    .max(90),
+  longitude: z.coerce
+    .number({ required_error: errors.longitude })
+    .min(-180)
+    .max(180),
 });
 
 export const TravelLogWithId = TravelLog.extend({

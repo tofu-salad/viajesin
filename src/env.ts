@@ -4,7 +4,7 @@ import { z } from "zod";
 export const env = createEnv({
   server: {
     DISCORD_CLIENT_SECRET: z.string().min(1),
-    AUTH_URL: z.string().url(),
+    AUTH_URL: z.string(),
     TURSO_URL: z.string(),
     TURSO_TOKEN: z.string(),
   },

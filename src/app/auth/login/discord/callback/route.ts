@@ -38,14 +38,15 @@ export async function GET(request: Request): Promise<Response> {
       return new Response(null, {
         status: 302,
         headers: {
-          Location: "/",
+          Location: "/map",
         },
       });
     }
-
+    const avatar = `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png`;
     const newUser = await createUser({
       discord_id: discordUser.id,
       username: discordUser.username,
+      avatar: avatar,
     });
 
     const session = await lucia.createSession(newUser.id, {});
@@ -58,7 +59,7 @@ export async function GET(request: Request): Promise<Response> {
     return new Response(null, {
       status: 302,
       headers: {
-        Location: "/",
+        Location: "/map",
       },
     });
   } catch (e) {
@@ -76,4 +77,5 @@ export async function GET(request: Request): Promise<Response> {
 type DiscordUser = {
   id: string;
   username: string;
+  avatar: string;
 };

@@ -1,16 +1,16 @@
-import MapMenu from "@/components/MapMenu";
-import LoadingSpinner from "@/components/ui/loading-spinner";
 import { getTravelLogsById } from "@/db/queries";
-import { getCurrentUser } from "@/lib/session";
+import { validateRequest } from "@/lib/auth";
 import dynamic from "next/dynamic";
-const Map = dynamic(() => import("@/components/Map"), {
+import MapMenu from "./_components/map-menu";
+import LoadingSpinner from "@/ui/loading-spinner";
+const Map = dynamic(() => import("./_components/map"), {
   ssr: false,
   loading: LoadingSpinner,
 });
 
 export default async function Home() {
-  const user = await getCurrentUser();
-  const logs = user ? await getTravelLogsById(user.id) : []
+  const { user } = await validateRequest();
+  const logs = user ? await getTravelLogsById(user.id) : [];
 
   const parsedLogs = logs.map((log) => ({ ...log }));
   const real = JSON.parse(JSON.stringify(parsedLogs));
@@ -19,7 +19,7 @@ export default async function Home() {
   }
   return (
     <div className="min-h-screen">
-      <MapMenu />
+      <MapMenu userSession={user} />
       <Map logs={real} />
     </div>
   );

@@ -6,9 +6,9 @@ import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
 import "leaflet/dist/leaflet.css";
 import { Star } from "lucide-react";
-import { ScrollArea } from "./ui/scroll-area";
-import { ClickIcon, DefaultIcon } from "./Map/map-icons";
-import { PopUpActions } from "./Map/PopUpActions";
+import { ClickIcon, DefaultIcon } from "./map-icons";
+import { ScrollArea } from "@/ui/scroll-area";
+import { PopUpActions } from "./popup-actions";
 
 type TravelLogMapProps = {
   logs: TravelLogWithId[];
@@ -29,7 +29,7 @@ const InitMap = ({ logs, onMapClick }: InitMapProps) => {
       map.invalidateSize();
       if (logs.length > 0) {
         const bounds = new L.LatLngBounds(
-          logs.map((log) => [log.latitude, log.longitude])
+          logs.map((log) => [log.latitude, log.longitude]),
         );
         map.fitBounds(bounds);
         map.setZoom(4);
@@ -54,10 +54,10 @@ export default function Map({ logs }: TravelLogMapProps) {
       });
       dispatch({
         type: "SET_SIDEBAR_VISIBLE",
-        data: true
-      })
+        data: true,
+      });
     },
-    [dispatch]
+    [dispatch],
   );
   return (
     <MapContainer

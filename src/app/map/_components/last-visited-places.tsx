@@ -1,27 +1,26 @@
+import { ScrollArea } from "@/ui/scroll-area";
+import { SelectTravelLog } from "@/db/schema";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Card, CardHeader, CardTitle } from "./ui/card";
-import { ScrollArea } from "./ui/scroll-area";
-import { SelectTravelLog } from "@/db/schema";
+} from "@/ui/accordion";
 
 export function LastVisitedPlaces({ logs }: { logs: SelectTravelLog[] }) {
   return (
-    <Card className="w-[350px] md:w-[400px] h-[300px] md:h-[375px]">
-      <CardHeader className="pt-4 pb-0">
-        <CardTitle>Ultimos lugares visitados</CardTitle>
-      </CardHeader>
-      <ScrollArea className="h-[300px] md:h-[375] p-4">
+    <div className="w-[350px] md:w-[400px] h-[300px] md:h-[375px]">
+      <header className="px-4 text-center">
+        <h2 className="underline">Ultimos lugares visitados</h2>
+      </header>
+      <ScrollArea className="h-[300px] md:h-[375]">
         {logs.length > 0 ? (
           <Accordion type="single" collapsible className=" w-full">
             {logs.map((log) => (
               <AccordionItem value={log.id} key={log.id}>
                 <AccordionTrigger className="items-end hover:no-underline">
-                  <div className="flex justify-between w-full pr-1 items-end">
-                    <span className="hover:underline">{log.title}</span>
+                  <div className="flex justify-between w-full px-4 items-end">
+                    <span className="hover:underline ">{log.title}</span>
                     <span className="text-gray-500 text-sm">
                       {log.visitDate.toLocaleDateString()}
                     </span>
@@ -46,6 +45,6 @@ export function LastVisitedPlaces({ logs }: { logs: SelectTravelLog[] }) {
           </p>
         )}
       </ScrollArea>
-    </Card>
+    </div>
   );
 }

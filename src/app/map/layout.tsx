@@ -1,6 +1,6 @@
-import { NavMenu } from "@/components/NavMenu";
 import TravelLogProvider from "@/context/TravelLog/TravelLogProvider";
-import { getCurrentUser } from "@/lib/session";
+import { NavMenu } from "./_components/nav-menu";
+import { validateRequest } from "@/lib/auth";
 
 export const metadata = {
   title: "Mapa de viajes",
@@ -12,10 +12,10 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getCurrentUser();
+  const { user } = await validateRequest();
   return (
     <TravelLogProvider>
-      {session ? <NavMenu session={session} /> : null}
+      {user ? <NavMenu userSession={user} /> : null}
       <main>{children}</main>
     </TravelLogProvider>
   );

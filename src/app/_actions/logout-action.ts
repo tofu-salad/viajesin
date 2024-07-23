@@ -1,9 +1,9 @@
+"use server";
 import { lucia, validateRequest } from "@/lib/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-async function logout(): Promise<ActionResult> {
-  "use server";
+export async function logout(): Promise<ActionResult> {
   const { session } = await validateRequest();
   if (!session) {
     return {
@@ -19,7 +19,7 @@ async function logout(): Promise<ActionResult> {
     sessionCookie.value,
     sessionCookie.attributes,
   );
-  return redirect("/login");
+  return redirect("/");
 }
 
 interface ActionResult {

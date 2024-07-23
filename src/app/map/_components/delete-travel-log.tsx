@@ -1,5 +1,4 @@
 import { FormEvent, useContext, useState } from "react";
-import { Button } from "./ui/button";
 import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { TravelLogWithId } from "@/models/TravelLog.model";
@@ -11,9 +10,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
-import { Spinner } from "./ui/loading-spinner";
+} from "@/ui/dialog";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
+import { Button } from "@/ui/button";
+import { Spinner } from "@/ui/loading-spinner";
 
 export default function DeleteTravelLog({ log }: { log: TravelLogWithId }) {
   const [open, setIsOpen] = useState<boolean>(false);

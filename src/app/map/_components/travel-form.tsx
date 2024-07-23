@@ -1,20 +1,28 @@
 "use client";
-import { TravelLog, TravelLogKey } from "@/models/TravelLog.model";
+import {
+  TravelLog,
+  TravelLogKey,
+  TravelLogKeys,
+} from "@/models/TravelLog.model";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useEffect, useState } from "react";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-import { Label } from "./ui/label";
-import { ScrollArea } from "./ui/scroll-area";
 import { AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Spinner } from "./ui/loading-spinner";
 import { travelLogInputs } from "@/app/map/_libs";
+import { ScrollArea } from "@/ui/scroll-area";
+import { Label } from "@/ui/label";
+import { Textarea } from "@/ui/textarea";
+import { Input } from "@/ui/input";
+import { Button } from "@/ui/button";
+import { Spinner } from "@/ui/loading-spinner";
+import { User } from "lucia";
 
-export default function TravelLogForm() {
+type Props = {
+  userSession: User;
+};
+export default function TravelLogForm({ userSession }: Props) {
   const { state, dispatch } = useContext(TravelLogContext);
   const [formError, setFormError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -46,9 +54,7 @@ export default function TravelLogForm() {
     try {
       setFormError("");
       setIsLoading(true);
-      const session = await fetch("/api/auth/session");
-      const sessionData = await session.json();
-      const userId = sessionData.user.id;
+      const userId = userSession.id;
       const response = await fetch("/api/travel_logs", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -83,10 +89,10 @@ export default function TravelLogForm() {
   };
 
   return (
-    <ScrollArea className="h-[calc(100vh-80px)]">
+    <ScrollArea className="py-4 max-w-[calc(100vw-20px)] w-[350px] max-h-[calc(100vh-70px)] ">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-2 mx-auto w-[350px] h-full py-4 px-4"
+        className="flex flex-col gap-2 mx-auto py-4 px-4"
       >
         {formError && (
           <div>
@@ -116,19 +122,58 @@ export default function TravelLogForm() {
                   })}
                 />
               )}
-              {
-                errors[key] && (
-                  <span className="text-red-700">{errors[key]?.message}</span>
-                )
-              }
+              {errors[key] && (
+                <span className="text-red-700">{errors[key]?.message}</span>
+              )}
             </div>
-          ) :
-            null
+          ) : null;
         })}
+        <section className="flex gap-4 pb-4">
+          <div className="flex gap-2 flex-col">
+            <Label htmlFor={TravelLogKeys.latitude}>
+              {travelLogInputs.latitude.label}
+            </Label>
+            <Input
+              id={travelLogInputs.latitude.label}
+              type={travelLogInputs.latitude.type}
+              className={`${errors[TravelLogKeys.latitude] ? "border-red-700" : ""}`}
+              {...register(TravelLogKeys.latitude, {
+                onChange: (e) =>
+                  handleInputChange(TravelLogKeys.latitude, e.target.value),
+              })}
+            />
+            {errors[TravelLogKeys.latitude] && (
+              <span className="text-red-700">
+                {errors[TravelLogKeys.latitude]?.message}
+              </span>
+            )}
+          </div>
+
+          <div className="flex gap-2 flex-col">
+            <Label htmlFor={TravelLogKeys.longitude}>
+              {travelLogInputs.longitude.label}
+            </Label>
+            <Input
+              id={TravelLogKeys.longitude}
+              type={travelLogInputs.longitude.type}
+              className={`${errors[TravelLogKeys.longitude] ? "border-red-700" : ""}`}
+              {...register(TravelLogKeys.longitude, {
+                onChange: (e) =>
+                  handleInputChange(TravelLogKeys.longitude, e.target.value),
+              })}
+            />
+            {errors[TravelLogKeys.longitude] && (
+              <span className="text-red-700">
+                {errors[TravelLogKeys.longitude]?.message}
+              </span>
+            )}
+          </div>
+        </section>
+
         <Button disabled={isLoading}>
           {isLoading ? <Spinner /> : "Crear"}
         </Button>
       </form>
-    </ScrollArea >
+    </ScrollArea>
   );
 }

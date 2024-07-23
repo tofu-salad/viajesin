@@ -20,6 +20,7 @@ export const lucia = new Lucia(adapter, {
     return {
       discordId: attributes.discord_id,
       username: attributes.username,
+      avatar: attributes.avatar,
     };
   },
 });
@@ -34,10 +35,10 @@ declare module "lucia" {
 interface DatabaseUserAttributes {
   discord_id: number;
   username: string;
+  avatar: string;
 }
 
 const url = `${env.AUTH_URL}auth/login/discord/callback`;
-console.log(url);
 
 export const discord = new Discord(
   env.NEXT_PUBLIC_DISCORD_CLIENT_ID,

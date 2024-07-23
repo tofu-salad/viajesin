@@ -1,14 +1,3 @@
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   EditFormData,
   EditFormDataKey,
@@ -19,11 +8,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, Edit } from "lucide-react";
 import { useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Textarea } from "./ui/textarea";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns/format";
-import { Spinner } from "./ui/loading-spinner";
+import { Spinner } from "@/ui/loading-spinner";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTrigger,
+} from "@/ui/dialog";
+import { Button } from "@/ui/button";
+import { Label } from "@/ui/label";
+import { Textarea } from "@/ui/textarea";
+import { Input } from "@/ui/input";
 
 export default function EditTravelLog({ log }: { log: TravelLogWithId }) {
   const [formError, setFormError] = useState("");
@@ -46,7 +46,7 @@ export default function EditTravelLog({ log }: { log: TravelLogWithId }) {
       rating: log.rating,
       visitDate: format(
         new Date(log.visitDate),
-        "yyyy-MM-dd"
+        "yyyy-MM-dd",
       ) as unknown as Date,
     },
   });

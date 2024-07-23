@@ -8,13 +8,14 @@ export const userTable = sqliteTable("user", {
     .$defaultFn(() => crypto.randomUUID()),
   discord_id: text("discord_id"),
   username: text("username"),
+  avatar: text("avatar"),
 });
 
 export const sessionTable = sqliteTable("session", {
   id: text("id").notNull().primaryKey(),
   userId: text("user_id")
     .notNull()
-    .references(() => userTable.id),
+    .references(() => userTable.id, { onDelete: "cascade" }),
   expiresAt: integer("expires_at").notNull(),
 });
 
