@@ -14,8 +14,8 @@ export const userTable = sqliteTable("user", {
 export const sessionTable = sqliteTable("session", {
   id: text("id").notNull().primaryKey(),
   userId: text("user_id")
-    .notNull()
-    .references(() => userTable.id, { onDelete: "cascade" }),
+    .references(() => userTable.id, { onDelete: "cascade" })
+    .notNull(),
   expiresAt: integer("expires_at").notNull(),
 });
 
@@ -24,8 +24,8 @@ export const travelLogsTable = sqliteTable("travel_logs", {
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
   userId: text("userId")
-    .notNull()
-    .references(() => userTable.id, { onDelete: "cascade" }),
+    .references(() => userTable.id, { onDelete: "cascade" })
+    .notNull(),
   title: text("title").notNull(),
   description: text("description").notNull(),
   image: text("image").notNull(),
@@ -37,5 +37,6 @@ export const travelLogsTable = sqliteTable("travel_logs", {
 });
 export type InsertUser = typeof userTable.$inferInsert;
 export type SelectUser = typeof userTable.$inferSelect;
+export type SelectSession = typeof sessionTable.$inferSelect;
 export type SelectTravelLog = typeof travelLogsTable.$inferSelect;
 export type InsertTravelLog = typeof travelLogsTable.$inferInsert;

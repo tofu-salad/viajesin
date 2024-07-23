@@ -6,7 +6,6 @@ import { getLastFiveVisitedPlaces } from "@/db/queries";
 export default async function Home() {
   const { user } = await validateRequest();
   const lastVisitedPlaces = await getLastFiveVisitedPlaces(user);
-  console.log(user)
 
   return (
     <main className="h-screen">

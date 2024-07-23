@@ -2,16 +2,21 @@ import { desc, eq } from "drizzle-orm";
 import {
   InsertTravelLog,
   InsertUser,
+  SelectSession,
   SelectTravelLog,
   SelectUser,
+  sessionTable,
   travelLogsTable,
   userTable,
 } from "./schema";
 import { db } from ".";
 import { User } from "lucia";
 
+export async function deleteSessionByUserId(userId: SelectSession["userId"]) {
+  return db.delete(sessionTable).where(eq(sessionTable.userId, userId));
+}
 export async function deleteUserById(id: SelectUser["id"]) {
-  return db.delete(userTable).where(eq(userTable.id, id)).returning();
+  return db.delete(userTable).where(eq(userTable.id, id));
 }
 
 export async function getTravelLogsById(
