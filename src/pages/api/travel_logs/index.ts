@@ -1,4 +1,10 @@
-import { createTravelLog, deleteTravelLog, getAllTravelLogs, getTravelLogsById, updateTravelLog } from "@/db/queries";
+import {
+  createTravelLog,
+  deleteTravelLog,
+  getAllTravelLogs,
+  getTravelLogsById,
+  updateTravelLog,
+} from "@/db/queries";
 import { SelectTravelLog } from "@/db/schema";
 import {
   EditFormDataWithId,
@@ -10,16 +16,16 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<
     SelectTravelLog[] | TravelLogWithUserId | { message: string }
-  >
+  >,
 ) {
   try {
     if (req.method === "GET") {
       const { id } = req.query;
       if (id && !Array.isArray(id)) {
-        const logs = await getTravelLogsById(id)
+        const logs = await getTravelLogsById(id);
         res.status(200).json(logs);
       } else {
-        const logs = await getAllTravelLogs()
+        const logs = await getAllTravelLogs();
         res.status(200).json(logs);
       }
     } else if (req.method === "POST") {
@@ -44,8 +50,7 @@ export default async function handler(
         longitude,
         userId,
       });
-      res.status(200).json({ message: `Log created ${createTravelLog}` })
-
+      res.status(200).json({ message: `Log created ${createTravelLog}` });
     } else if (req.method === "PUT") {
       const { id, image, title, rating, visitDate, description } =
         await EditFormDataWithId.parseAsync(req.body);
@@ -63,7 +68,7 @@ export default async function handler(
     } else if (req.method === "DELETE") {
       const { id } = req.query;
       if (id && !Array.isArray(id)) {
-        const deletedLog = deleteTravelLog(id)
+        const deletedLog = deleteTravelLog(id);
 
         res.status(200).json({ message: `Log deleted ${deletedLog}` });
       }

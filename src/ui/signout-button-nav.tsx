@@ -1,10 +1,9 @@
 "use client";
 
-import { signOut } from "next-auth/react";
 import { Button } from "./button";
-import { LogOut } from "lucide-react";
 import { useState } from "react";
 import { Spinner } from "./loading-spinner";
+import { logout } from "@/app/_actions/logout-action";
 
 export default function SignOutButtonNav() {
   const [loading, setLoading] = useState(false);
@@ -14,14 +13,11 @@ export default function SignOutButtonNav() {
     } catch (e) {
       throw new Error("Falló al intentar cerrar sesión");
     } finally {
-      signOut();
+      async () => await logout();
     }
   };
   return (
-    <Button
-      onClick={handleLogout}
-      className="flex items-center bg-slate-900 "
-    >
+    <Button onClick={handleLogout} className="flex items-center bg-slate-900 ">
       {loading ? (
         <Spinner />
       ) : (

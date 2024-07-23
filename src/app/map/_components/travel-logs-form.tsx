@@ -4,14 +4,14 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useEffect, useState } from "react";
 import TravelLogContext from "@/context/TravelLog/TravelLogContext";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-import { Label } from "./ui/label";
-import { ScrollArea } from "./ui/scroll-area";
+import { Button } from "@/ui/button";
+import { Input } from "@/ui/input";
+import { Textarea } from "@/ui/textarea";
+import { Label } from "@/ui/label";
+import { ScrollArea } from "@/ui/scroll-area";
 import { AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Spinner } from "./ui/loading-spinner";
+import { Spinner } from "@/ui/loading-spinner";
 import { travelLogInputs } from "@/app/map/_libs";
 
 export default function TravelLogForm() {
@@ -116,19 +116,16 @@ export default function TravelLogForm() {
                   })}
                 />
               )}
-              {
-                errors[key] && (
-                  <span className="text-red-700">{errors[key]?.message}</span>
-                )
-              }
+              {errors[key] && (
+                <span className="text-red-700">{errors[key]?.message}</span>
+              )}
             </div>
-          ) :
-            null
+          ) : null;
         })}
         <Button disabled={isLoading}>
           {isLoading ? <Spinner /> : "Crear"}
         </Button>
       </form>
-    </ScrollArea >
+    </ScrollArea>
   );
 }

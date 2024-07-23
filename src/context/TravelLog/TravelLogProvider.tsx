@@ -9,7 +9,7 @@ type TravelLogProviderProps = { children: ReactNode };
 
 function TravelLogReducer(
   state: TravelLogState,
-  action: TravelLogActionTypes
+  action: TravelLogActionTypes,
 ): TravelLogState {
   switch (action.type) {
     case "SET_CURRENT_MARKER_LOCATION": {
