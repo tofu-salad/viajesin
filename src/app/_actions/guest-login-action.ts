@@ -1,18 +1,15 @@
 "use server";
 
 import { createUser, getUserById } from "@/db/queries";
-import { SelectUser } from "@/db/schema";
 import { lucia } from "@/lib/auth";
 import { ActionResult } from "next/dist/server/app-render/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function loginGuestUser(): Promise<ActionResult> {
-  const guestUser: SelectUser = {
-    id: "Invitado",
+  const guestUser = {
+    id: "guest",
     username: "Invitado",
-    avatar: null,
-    discord_id: null,
   };
   let existingUser = await getUserById(guestUser.id);
   if (!existingUser) {
@@ -30,5 +27,5 @@ export async function loginGuestUser(): Promise<ActionResult> {
     sessionCookie.value,
     sessionCookie.attributes,
   );
-  return redirect("/");
+  return redirect("/map");
 }
